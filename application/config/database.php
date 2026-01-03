@@ -102,3 +102,4 @@ if($_SERVER['SERVER_NAME'] == 'foodtooken.codecrafterinfotech.online'){
 	$db['default']['password'] = 'FoodToken@2026';
 	$db['default']['database'] = 'u875583157_food_token';
 }	
+
