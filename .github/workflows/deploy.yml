@@ -24,7 +24,7 @@ jobs:
 
       # Upload only changed files since last sync
       - name: Deploy changed files only
-        uses: Deploy Food Token
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
