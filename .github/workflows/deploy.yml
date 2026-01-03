@@ -1,0 +1,50 @@
+name: Deploymet of eco waste connect
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Restore previous FTP sync state (this enables incremental upload)
+      - name: Restore FTP state cache
+        uses: actions/cache@v4
+        with:
+          path: .ftp-deploy-sync-state.json
+          key: ${{ runner.os }}-ftp-${{ github.ref }}
+          restore-keys: |
+            ${{ runner.os }}-ftp-
+
+      # Upload only changed files since last sync
+      - name: Deploy changed files only
+        uses: Deploy Food Token
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
+          server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.github*
+            **/node_modules/*
+            **/README.md
+            **/uploads/*
+          dangerous-clean-slate: false
+          state-name: .ftp-deploy-sync-state.json
+          log-level: minimal
+
+      # Save new FTP sync state for next run
+      - name: Save FTP state cache
+        uses: actions/cache@v4
+        with:
+          path: .ftp-deploy-sync-state.json
+          key: ${{ runner.os }}-ftp-${{ github.sha }}
