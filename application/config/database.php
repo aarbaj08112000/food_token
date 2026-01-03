@@ -97,8 +97,8 @@ $db['default'] = array(
 	'port' => 3307
 );
 
-// if($_SERVER['SERVER_NAME'] == 'dinemaster.codecrafterinfotech.online'){
-// 	$db['default']['username'] = 'u875583157_dimemaster';
-// 	$db['default']['password'] = 'Dimemaster@2025';
-// 	$db['default']['database'] = 'u875583157_dimemaster';
-// }	
+if($_SERVER['SERVER_NAME'] == 'foodtooken.codecrafterinfotech.online'){
+	$db['default']['username'] = 'u875583157_food_token';
+	$db['default']['password'] = 'FoodToken@2026';
+	$db['default']['database'] = 'u875583157_food_token';
+}	
