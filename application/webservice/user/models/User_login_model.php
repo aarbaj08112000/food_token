@@ -7,9 +7,6 @@ class User_login_model extends CI_Model{
     public function __construct() {
         parent::__construct();
         $this->load->database();
-        // ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
     }
 
     public function register($data) {
@@ -70,6 +67,13 @@ class User_login_model extends CI_Model{
             'user_password' => $hashed_password,
             'updated_date'  => date('Y-m-d H:i:s')
         ]);
+    }
+    public function get_user_details($user_id=0)
+    {
+        $this->db->where('user_id', $user_id);
+
+        $order = $this->db->get_where("users")->row();
+        return (array) $order;
     }
 
 }

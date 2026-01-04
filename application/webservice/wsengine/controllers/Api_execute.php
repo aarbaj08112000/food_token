@@ -39,8 +39,8 @@ class api_execute extends MX_Controller {
 		$extra_params = array_slice($this->uri->segments, 4);
 		
 		if(array_key_exists($api_method_name, $all_methods)){
-			require APPPATH.'libraries/REST_Controller.php';
-		
+			
+			
 			/* get api method details */
 			$method_details = $all_methods[$api_method_name];
 			/* create api path */
@@ -64,7 +64,7 @@ class api_execute extends MX_Controller {
 			}
 			if ($api_func && method_exists($this->$api_method_name, $api_func)) {
 				// Pass all collected parameters to the API function
-				
+				require APPPATH.'libraries/REST_Controller.php';
 				call_user_func_array([$this->$api_method_name, $api_func], $call_params);
 			} else {
 				// Map HTTP verbs to method names
@@ -82,7 +82,7 @@ class api_execute extends MX_Controller {
 					call_user_func_array([$this->$api_method_name, $method_to_call], $call_params);
 				} else {
 					// Fallback: method not found
-					require_once(APPPATH.'controllers/Api_response.php');
+					require_once(APPPATH.'webservice/wsengine/controllers/Api_response.php');
 					$api_instant = new Api_response();
 					$return_arr = [
 						"success" => 0,
@@ -95,8 +95,8 @@ class api_execute extends MX_Controller {
 			}
 
 		}else{
-
-			require_once(APPPATH.'controllers/Api_response.php');
+			require_once(APPPATH.'webservice/wsengine/controllers/Api_response.php');
+			// pr($api_method_name,1);
 			$api_instant = new Api_response(); 
 			$return_arr = array(
 		        "success" => 0,
@@ -107,6 +107,7 @@ class api_execute extends MX_Controller {
 		        "message" => "API code does not exist.",
 		        "data" => []
 		    );
+			
 		    $server_error = REST_Controller::HTTP_OK;
 		    $api_instant->response_return($return_arr,$server_error);
 		}

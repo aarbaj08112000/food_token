@@ -5,6 +5,8 @@ $config = array();
 
 #####GENERATED_CONFIG_SETTINGS_START#####
 
+
+/* User Detail */ 
 $config["user_login"] = array(
     "title" => "User Login",
     "folder" => "user",
@@ -23,6 +25,18 @@ $config["auth"] = array(
         "password"
     )
 );
+
+$config["user_details"] = array(
+    "title" => "User Details",
+    "folder" => "user",
+    "method" => "GET_POST",
+    "params" => array(
+        "email",
+        "password"
+    )
+);
+
+/* User Detail */ 
 
 $config["order"] = array(
     "title" => "Order",
@@ -49,6 +63,7 @@ $config['categories'] = array(
     )
 );
 
+
 /* item CURD */
 $config["item_add_update"] = array(
     "title" => "Item Add Update",
@@ -61,6 +76,15 @@ $config["item_add_update"] = array(
 
 $config["get_restaurant_item"] = array(
     "title" => "Get Restaurant Items",
+    "folder" => "menu",
+    "method" => "POST",
+    "params" => array(
+        
+    )
+);
+
+$config["get_restaurant_details"] = array(
+    "title" => "Get Restaurant Details",
     "folder" => "menu",
     "method" => "POST",
     "params" => array(
