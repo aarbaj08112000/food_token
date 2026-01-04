@@ -126,7 +126,8 @@ class User_login extends My_Api_Controller{
         if (empty($email) || empty($new_password)) {
             return $this->response([
                 'success' => false,
-                'message' => 'Email and new password are required.'
+                'message' => 'Email and new password are required.',
+                'data' => []
             ], REST_Controller::HTTP_BAD_REQUEST);
         }
 
@@ -136,7 +137,8 @@ class User_login extends My_Api_Controller{
         if (!$user) {
             return $this->response([
                 'success' => false,
-                'message' => 'Email not found.'
+                'message' => 'Email not found.',
+                'data' => []
             ], REST_Controller::HTTP_NOT_FOUND);
         }
 
@@ -146,12 +148,14 @@ class User_login extends My_Api_Controller{
         if ($updated) {
             return $this->response([
                 'success' => true,
-                'message' => 'Password updated successfully.'
+                'message' => 'Password updated successfully.',
+                'data' => [],
             ], REST_Controller::HTTP_OK);
         } else {
             return $this->response([
                 'success' => false,
-                'message' => 'Failed to update password.'
+                'message' => 'Failed to update password.',
+                'data' => [],
             ], REST_Controller::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -165,13 +169,13 @@ class User_login extends My_Api_Controller{
         $this->form_validation->set_rules('new_password', 'New password', 'required|min_length[6]');
         if ($this->form_validation->run() === false) {
             
-            return $this->response(['success' => false, 'errors' => $this->form_validation->error_array()], REST_Controller::HTTP_BAD_REQUEST);
+            return $this->response(['success' => false, 'errors' => $this->form_validation->error_array(),'data' => []], REST_Controller::HTTP_BAD_REQUEST);
         }
         
         $user = $this->user_login_model->get_by_id($input['user_id']);
         if (!$user || !$this->verify_password($input['old_password'], $user->user_password)) {
 
-            return $this->response(['success' => false, 'message' => 'Old password does not match.'], REST_Controller::HTTP_UNAUTHORIZED);
+            return $this->response(['success' => false, 'message' => 'Old password does not match.','data' => []], REST_Controller::HTTP_UNAUTHORIZED);
         }
         $new_password = $input['new_password'];
         $updated = $this->user_login_model->update_password_by_id($input['user_id'], $new_password);

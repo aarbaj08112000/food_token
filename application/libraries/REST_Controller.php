@@ -758,7 +758,7 @@ abstract class REST_Controller extends \MX_Controller {
      * @param int|NULL $http_code HTTP status code
      * running the script; otherwise, exit
      */
-    public function response($data = NULL, $http_code = NULL)
+    public function response($data = [], $http_code = NULL)
     {
      
         
