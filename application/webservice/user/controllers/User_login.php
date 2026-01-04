@@ -19,7 +19,7 @@ class User_login extends My_Api_Controller{
 
             if ($this->current_user->id != $id ) {
                 return $this->response([
-                    'status' => false,
+                    'success' => false,
                     'message' => 'Forbidden'
                 ], REST_Controller::HTTP_FORBIDDEN);
             }
@@ -27,13 +27,13 @@ class User_login extends My_Api_Controller{
             $u = $this->user_login_model->get_by_id($id);
             if (!$u) {
                 return $this->response([
-                    'status' => false,
+                    'success' => false,
                     'message' => 'Not found'
                 ], REST_Controller::HTTP_NOT_FOUND);
             }
 
             unset($u->user_password);
-            return $this->response(['success' => true, 'message' => 'register succesfullly' ,'status' => true, 'data' => $u], REST_Controller::HTTP_OK);
+            return $this->response(['success' => true, 'message' => 'register succesfullly' ,'success' => true, 'data' => $u], REST_Controller::HTTP_OK);
         }
         if ($this->authenticate() !== true) return;
         
@@ -49,7 +49,7 @@ class User_login extends My_Api_Controller{
             unset($u->user_password);
         }
 
-        return $this->response(['success' => true, 'message' => 'register succesfullly','status' => true, 'data' => $users], REST_Controller::HTTP_OK);
+        return $this->response(['success' => true, 'message' => 'register succesfullly','success' => true, 'data' => $users], REST_Controller::HTTP_OK);
     }
 
     public function index_post()
@@ -68,7 +68,7 @@ class User_login extends My_Api_Controller{
         $id = $this->user_login_model->register($input);
 
         return $this->response([
-            'status' => true,
+            'success' => true,
             'user_id' => $id
         ], REST_Controller::HTTP_CREATED);
     }
@@ -78,14 +78,14 @@ class User_login extends My_Api_Controller{
         if ($this->authenticate() !== true) return;
         if (!$id) {
             return $this->response([
-                'status' => false,
+                'success' => false,
                 'message' => 'Missing id'
             ], REST_Controller::HTTP_BAD_REQUEST);
         }
 
         if ($this->current_user->id != $id ) {
             return $this->response([
-                'status' => false,
+                'success' => false,
                 'message' => 'Forbidden'
             ], REST_Controller::HTTP_FORBIDDEN);
         }
@@ -95,7 +95,7 @@ class User_login extends My_Api_Controller{
         $ok = $this->user_login_model->update_user($id, $this->put());
 
         return $this->response([
-            'status' => true,
+            'success' => true,
             'updated' => $ok
         ], REST_Controller::HTTP_OK);
     }
@@ -113,7 +113,7 @@ class User_login extends My_Api_Controller{
         $this->user_login_model->update_user($id, ['is_active' => 0]);
 
         return $this->response([
-            'status' => true,
+            'success' => true,
             'message' => 'Deactivated'
         ], REST_Controller::HTTP_OK);
     }
@@ -125,7 +125,7 @@ class User_login extends My_Api_Controller{
 
         if (empty($email) || empty($new_password)) {
             return $this->response([
-                'status' => false,
+                'success' => false,
                 'message' => 'Email and new password are required.'
             ], REST_Controller::HTTP_BAD_REQUEST);
         }
@@ -135,7 +135,7 @@ class User_login extends My_Api_Controller{
 
         if (!$user) {
             return $this->response([
-                'status' => false,
+                'success' => false,
                 'message' => 'Email not found.'
             ], REST_Controller::HTTP_NOT_FOUND);
         }
@@ -145,12 +145,12 @@ class User_login extends My_Api_Controller{
 
         if ($updated) {
             return $this->response([
-                'status' => true,
+                'success' => true,
                 'message' => 'Password updated successfully.'
             ], REST_Controller::HTTP_OK);
         } else {
             return $this->response([
-                'status' => false,
+                'success' => false,
                 'message' => 'Failed to update password.'
             ], REST_Controller::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -165,24 +165,24 @@ class User_login extends My_Api_Controller{
         $this->form_validation->set_rules('new_password', 'New password', 'required|min_length[6]');
         if ($this->form_validation->run() === false) {
             
-            return $this->response(['status' => false, 'errors' => $this->form_validation->error_array()], REST_Controller::HTTP_BAD_REQUEST);
+            return $this->response(['success' => false, 'errors' => $this->form_validation->error_array()], REST_Controller::HTTP_BAD_REQUEST);
         }
         
         $user = $this->user_login_model->get_by_id($input['user_id']);
         if (!$user || !$this->verify_password($input['old_password'], $user->user_password)) {
 
-            return $this->response(['status' => false, 'message' => 'Old password does not match.'], REST_Controller::HTTP_UNAUTHORIZED);
+            return $this->response(['success' => false, 'message' => 'Old password does not match.'], REST_Controller::HTTP_UNAUTHORIZED);
         }
         $new_password = $input['new_password'];
         $updated = $this->user_login_model->update_password_by_id($input['user_id'], $new_password);
         if ($updated) {
             return $this->response([
-                'status' => true,
+                'success' => true,
                 'message' => 'Password reset successfully.'
             ], REST_Controller::HTTP_OK);
         } else {
             return $this->response([
-                'status' => false,
+                'success' => false,
                 'message' => 'Failed to update password.'
             ], REST_Controller::HTTP_INTERNAL_SERVER_ERROR);
         }
