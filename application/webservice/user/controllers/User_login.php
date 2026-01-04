@@ -118,7 +118,7 @@ class User_login extends My_Api_Controller{
         ], REST_Controller::HTTP_OK);
     }
 
-    public function forgot_password_post()
+    public function forgot_password()
     {
         $email = $this->post('email');
         $new_password = $this->post('password');
