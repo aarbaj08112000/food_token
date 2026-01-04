@@ -36,6 +36,16 @@ $config["user_details"] = array(
     )
 );
 
+$config["user_update"] = array(
+    "title" => "User Update",
+    "folder" => "user",
+    "method" => "GET_POST",
+    "params" => array(
+        "email",
+        "password"
+    )
+);
+
 /* User Detail */ 
 
 $config["order"] = array(
@@ -85,6 +95,15 @@ $config["get_restaurant_item"] = array(
 
 $config["get_restaurant_details"] = array(
     "title" => "Get Restaurant Details",
+    "folder" => "menu",
+    "method" => "POST",
+    "params" => array(
+        
+    )
+);
+
+$config["restaurant_update"] = array(
+    "title" => "Restaurant Details Update",
     "folder" => "menu",
     "method" => "POST",
     "params" => array(
