@@ -26,6 +26,10 @@ class User_login_model extends CI_Model{
         return $this->db->get_where($this->table, ['user_email'=>$email, 'status'=>"Active"])->row();
     }
 
+    public function get_restaurant_by_id($company_id) {
+        return $this->db->get_where("restaurants", ['restaurant_id'=>$company_id])->row();
+    }
+
     public function get_by_id($id) {
         return $this->db->get_where($this->table, ['user_id'=>$id])->row();
     }
@@ -47,14 +51,26 @@ class User_login_model extends CI_Model{
     public function update_password_by_email($email, $new_password) {
     $hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
 
-    $this->db->where('user_email', $email)
-             ->where('status', 'Active'); // only update active users
+        $this->db->where('user_email', $email)
+                ->where('status', 'Active'); // only update active users
 
-    return $this->db->update($this->table, [
-        'user_password' => $hashed_password,
-        'updated_date'  => date('Y-m-d H:i:s')
-    ]);
-}
+        return $this->db->update($this->table, [
+            'user_password' => $hashed_password,
+            'updated_date'  => date('Y-m-d H:i:s')
+        ]);
+    }
+
+    public function update_password_by_id($id, $new_password) {
+    $hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
+
+        $this->db->where('user_id', $id)
+                ->where('status', 'Active'); // only update active users
+
+        return $this->db->update($this->table, [
+            'user_password' => $hashed_password,
+            'updated_date'  => date('Y-m-d H:i:s')
+        ]);
+    }
 
 }
 
