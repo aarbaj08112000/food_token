@@ -51,6 +51,9 @@ class Get_restaurant_item extends My_Api_Controller
             $message = "Somthing went wrong.";
             $data = [];
             $restaurant_item_data = $this->get_restaurant_item_model->get($restaurant_id);
+            foreach ($restaurant_item_data as $key => $value) {
+                $restaurant_item_data[$key]->image_url = base_url($value->image_url);
+            }
             $success = 1;
             $message = "Restaurant item data fetched successfully.";
             $data['items_data'] = $restaurant_item_data;
