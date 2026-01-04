@@ -47,7 +47,7 @@ class api_execute extends MX_Controller {
 			
 			
 			$api_path = $method_details['folder']."/controllers/".ucfirst($api_method_name);
-			
+			require APPPATH.'libraries/REST_Controller.php';
 			$this->load->module($method_details['folder'] . "/" . $api_method_name);
 				// Now you can access the module instance through $this
 			// $className = ucfirst($api_method_name); 
@@ -64,7 +64,6 @@ class api_execute extends MX_Controller {
 			}
 			if ($api_func && method_exists($this->$api_method_name, $api_func)) {
 				// Pass all collected parameters to the API function
-				require APPPATH.'libraries/REST_Controller.php';
 				call_user_func_array([$this->$api_method_name, $api_func], $call_params);
 			} else {
 				// Map HTTP verbs to method names
