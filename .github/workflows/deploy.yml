@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      
+      - name: Remove git directory
+        run: rm -rf .git
 
       # Restore previous FTP sync state (this enables incremental upload)
       - name: Restore FTP state cache
@@ -34,7 +37,9 @@ jobs:
           server-dir: /public_html/
           exclude: |
             **/.git*
+            **/.git/**
             **/.github*
+            .github/**
             **/node_modules/*
             **/README.md
             **/uploads/*
