@@ -61,7 +61,7 @@ $autoload['packages'] = array();
 if($GLOBALS['is_ws']){
     $autoload['libraries'] = array('database',"parser");
 }else{  
-    $autoload['libraries'] = array('database', 'session', 'form_validation', 'pdf','smartie' => 'smarty','phpmailer_lib');
+    $autoload['libraries'] = array('database', 'session', 'form_validation','smartie' => 'smarty','phpmailer_lib');
 }
 
 /*
