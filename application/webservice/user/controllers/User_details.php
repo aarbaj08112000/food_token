@@ -33,6 +33,7 @@ class User_details extends My_Api_Controller
         if(count($user_data) > 0){
             $success = 1;
             $message = "User data fetched successfully.";
+            $user_data['image'] = base_url($user_data['image']);
             $data =  $user_data;
         } 
         return  $this->response(array(

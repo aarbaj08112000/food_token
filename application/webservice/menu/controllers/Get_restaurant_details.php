@@ -34,6 +34,7 @@ class Get_restaurant_details extends My_Api_Controller
         if(count($restaurant_item_data) > 0){
             $success = 1;
             $message = "Restaurant item data fetched successfully.";
+            $restaurant_item_data['logo_url'] = base_url($restaurant_item_data['logo_url']);
             $data =  $restaurant_item_data;
         }
         return  $this->response(array(

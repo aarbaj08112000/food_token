@@ -49,7 +49,10 @@ class Auth extends My_Api_Controller
         $this->user_login_model->set_token($user->user_id, $token);
         $data['token'] = $token;
         $data['id'] = $user->user_id;
+        // pr($user->image,1);
+        $user->image = base_url($user->image);
         $data['user_details'] = $user;
+        $restaurant->logo_url = base_url($restaurant->logo_url);
         $data['restaurant'] = $restaurant;
         return $this->response(['success' => 1,'message' => 'Login successfully', 'data' => $data], REST_Controller::HTTP_OK);
     }
