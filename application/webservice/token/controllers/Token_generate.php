@@ -58,7 +58,8 @@ class Token_generate extends My_Api_Controller
             if($token_data['token_id'] > 0 ){
                 $message = "Token generated sucessfully";
                 $data = [
-                    "token_number" => $token_data['token_number']
+                    "token_number" => $token_data['token_number'],
+                    "url" => ""
                 ];
             }
         }else{
