@@ -187,7 +187,7 @@ class User_login extends My_Api_Controller{
         } else {
             return $this->response([
                 'success' => 0,
-                'message' => 'Failed to update password.'
+                'message' => 'Failed to update password.',
             ], REST_Controller::HTTP_INTERNAL_SERVER_ERROR);
         }
         

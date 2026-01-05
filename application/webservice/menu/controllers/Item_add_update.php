@@ -16,8 +16,12 @@ class Item_add_update extends My_Api_Controller
         }
         $user_id = $this->current_user->user_id;
         $restaurant_id = $this->current_user->restaurant_id;
+        $post_data = $this->input->post();
+        if(!(count($post_data) > 0)){
+            $data = json_decode($this->input->raw_input_stream, true);
+            $_POST = $data;
+        }
         
-
         $config = array(
             array(
                 'field' => 'name',
