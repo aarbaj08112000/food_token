@@ -80,7 +80,7 @@ class Item_add_update extends My_Api_Controller
                 $data = [];
                 if($id > 0){
 
-                    $item_data = $this->item_add_update_model->get_details($id);
+                    $item_data = $this->item_add_update_model->get_details($id,$restaurant_id);
                     $image_url = $item_data['image_url'];
                     $update_arr = [
                         "name" => $name,
@@ -88,10 +88,9 @@ class Item_add_update extends My_Api_Controller
                         "base_price" => $price,
                         "image_url" => $image_data['image_url'] != "" ? $image_data['image_url'] : $image_url,
                         "updated_by" => $user_id,
-                        "restaurant_id" => $restaurant_id,
                         "updated_date" => date("Y-m-d H:i:s")
                     ];
-                    $item_data = $this->item_add_update_model->get($name,$id);
+                    $item_data = $this->item_add_update_model->get($name,$restaurant_id,$id);
                     if(count($item_data) > 0 ){
                         $message = "Item already added with this name";
                     }else{
@@ -110,7 +109,7 @@ class Item_add_update extends My_Api_Controller
                         "restaurant_id" => $restaurant_id,
                         "added_date" => date("Y-m-d H:i:s")
                     ];
-                    $item_data = $this->item_add_update_model->get($name);
+                    $item_data = $this->item_add_update_model->get($name,$restaurant_id);
                     if(count($item_data) > 0 ){
                         $message = "Item already added with this name";
                     }else{

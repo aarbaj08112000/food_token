@@ -84,6 +84,15 @@ $config["item_add_update"] = array(
     )
 );
 
+$config["item_delete"] = array(
+    "title" => "Item Delete",
+    "folder" => "menu",
+    "method" => "POST",
+    "params" => array(
+        
+    )
+);
+
 $config["get_restaurant_item"] = array(
     "title" => "Get Restaurant Items",
     "folder" => "menu",
