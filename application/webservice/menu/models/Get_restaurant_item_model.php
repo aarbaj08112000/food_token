@@ -5,7 +5,7 @@ class Get_restaurant_item_model extends CI_Model
     public function get($restaurant_id=0)
     {
         $this->db->where('restaurant_id', $restaurant_id);
-
+        $this->db->where('status', "Active");
         $order = $this->db->get_where($this->table)->result();
         return (array) $order;
     }
