@@ -56,6 +56,7 @@ class Token_generate extends My_Api_Controller
             ];
             $token_data = $this->token_generate_model->generate_token($payload);
             if($token_data['token_id'] > 0 ){
+                $success = 1;
                 $message = "Token generated sucessfully";
                 $data = [
                     "token_number" => $token_data['token_number'],
