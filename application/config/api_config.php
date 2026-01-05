@@ -121,6 +121,17 @@ $config["restaurant_update"] = array(
 );
 
 
+/* Token CURD */
+
+$config["token_generate"] = array(
+    "title" => "Generate Token",
+    "folder" => "token",
+    "method" => "POST",
+    "params" => array(
+        
+    )
+);
+
 #####GENERATED_CONFIG_SETTINGS_END#####
 
 /* End of file cit_webservices.php */
