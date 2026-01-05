@@ -60,7 +60,7 @@ class Token_generate extends My_Api_Controller
                 $message = "Token generated sucessfully";
                 $data = [
                     "token_number" => $token_data['token_number'],
-                    "url" => ""
+                    "url" => base_url("public/uploads/token/1/104.pdf")
                 ];
             }
         }else{
