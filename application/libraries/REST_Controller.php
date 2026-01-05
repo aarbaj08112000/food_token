@@ -840,7 +840,7 @@ abstract class REST_Controller extends \MX_Controller {
             $response['settings']['errors'] = $data['errors'];
             $response['data'] = [];
         }else{
-          $response['data'] = $data['data'];
+          $response['data'] = isset($data['data']) ? $data['data'] : [];
         }
         return $response;
     }

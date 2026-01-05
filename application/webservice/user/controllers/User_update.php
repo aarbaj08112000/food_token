@@ -74,7 +74,7 @@ class User_update extends My_Api_Controller
                 $data = [];
                 if($user_id > 0){
                     $user_data = $this->user_login_model->get_by_id($user_id);
-                    $image_url = $user_data->image_url;
+                    $image_url = $user_data->image;
                     $update_arr = [
                         "user_name" => $name,
                         "phone" => $phone,
