@@ -67,7 +67,7 @@ function dbFormDate($date ='',$format = ""){
 	return $date;
 }
 
- function getDefaultDateTime($str = ''){
+function getDefaultDateTime($str = ''){
 	$formats = [
         'Y-m-d H:i:s',
         'd-m-Y H:i:s',
@@ -81,6 +81,23 @@ function dbFormDate($date ='',$format = ""){
         $dateTime = DateTime::createFromFormat($format, $str);
         if ($dateTime !== false) {
             return $dateTime->format('d/m/Y H:i:s');
+        }
+    }
+}
+function getDefaultDateTimeForToken($str = ''){
+	$formats = [
+        'Y-m-d H:i:s',
+        'd-m-Y H:i:s',
+        'm/d/Y H:i:s', 
+        'Y/m/d H:i:s', 
+        'd/m/Y H:i:s',
+        
+    ];
+
+    foreach ($formats as $format) {
+        $dateTime = DateTime::createFromFormat($format, $str);
+        if ($dateTime !== false) {
+            return $dateTime->format('d/m/Y h:i:s A');
         }
     }
 }

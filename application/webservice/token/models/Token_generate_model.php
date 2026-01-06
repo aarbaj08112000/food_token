@@ -43,5 +43,15 @@ class Token_generate_model extends CI_Model
         
         return $items;
     }
+    public function get_tokens_details($restaurant_id = 0,$token_id = 0)
+    {
+        $this->db->select('t.*,r.name as restaurant_name,r.address_line1 as address,r.contact_phone as mobile');
+        $this->db->from('tokens t');
+        $this->db->join('restaurants r', 'r.restaurant_id = t.restaurant_id');
+        $this->db->where('t.restaurant_id', $restaurant_id);
+        $this->db->where('t.token_id', $token_id);
+        $result = $this->db->get()->row_array();
+        return $result;
+    }
    
 }
