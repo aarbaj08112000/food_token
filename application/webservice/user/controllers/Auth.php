@@ -30,6 +30,8 @@ class Auth extends My_Api_Controller
         $this->form_validation->set_data($input);
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('device_id', 'Device id', 'required');
+        $this->form_validation->set_rules('device_type', 'Device type', 'required');
         if ($this->form_validation->run() === false) {
             
             return $this->response(['success' => 0, 'errors' => $this->form_validation->error_array()], REST_Controller::HTTP_BAD_REQUEST);
@@ -37,8 +39,15 @@ class Auth extends My_Api_Controller
         
         $user = $this->user_login_model->get_by_email($input['email']);
         if (!$user || !$this->verify_password($input['password'], $user->user_password)) {
-
             return $this->response(['success' => 0, 'message' => 'Invalid credentials'], REST_Controller::HTTP_UNAUTHORIZED);
+        }else{
+            
+            $checkDate = new DateTime($user->token_issued_at);
+            
+            if($user->api_token != ""){
+                return $this->response(['success' => 0, 'message' => 'User is already logged in on another device.'], REST_Controller::HTTP_UNAUTHORIZED);
+            }
+            
         }
         $restaurant = $this->user_login_model->get_restaurant_by_id($user->restaurant_id);
         
@@ -46,10 +55,9 @@ class Auth extends My_Api_Controller
         
         $token = $this->jwt_encode($payload);
         
-        $this->user_login_model->set_token($user->user_id, $token);
+        $this->user_login_model->set_token($user->user_id, $token,$input['device_id'],$input['device_type']);
         $data['token'] = $token;
         $data['id'] = $user->user_id;
-        // pr($user->image,1);
         $user->image = base_url($user->image);
         $data['user_details'] = $user;
         $restaurant->logo_url = base_url($restaurant->logo_url);

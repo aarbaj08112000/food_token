@@ -141,6 +141,17 @@ $config["token_summary"] = array(
     )
 );
 
+/* Subcription */
+
+$config["subscription_check"] = array(
+    "title" => "Check Subscription",
+    "folder" => "subscription",
+    "method" => "GET",
+    "params" => array(
+        
+    )
+);
+
 #####GENERATED_CONFIG_SETTINGS_END#####
 
 /* End of file cit_webservices.php */

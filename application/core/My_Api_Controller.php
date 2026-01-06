@@ -51,7 +51,7 @@ class My_Api_Controller extends REST_Controller
             return null;
         // check expiry
         if (isset($payload['exp']) && time() > $payload['exp'])
-            return null;
+            return ["success" => -1,"message" => "Token Expired","uid" =>  $payload['uid']];
         return $payload;
     }
 
@@ -71,6 +71,12 @@ class My_Api_Controller extends REST_Controller
         $payload = $this->jwt_decode($token);
         if (!$payload || !isset($payload['uid'])) {
             $this->response(['status' => false, 'message' => 'Invalid or expired token'], REST_Controller::HTTP_UNAUTHORIZED);
+            return false;
+        }
+
+        if ($payload['success'] == -1 &&  isset($payload['success']) ) {
+            $this->user_login_model->set_token($payload['uid'], "");
+            $this->response(['success' => $payload['success'], 'message' => $payload['message']], REST_Controller::HTTP_UNAUTHORIZED);
             return false;
         }
         // load user
