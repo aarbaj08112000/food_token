@@ -132,6 +132,15 @@ $config["token_generate"] = array(
     )
 );
 
+$config["token_summary"] = array(
+    "title" => "Token Summary",
+    "folder" => "token",
+    "method" => "POST",
+    "params" => array(
+        
+    )
+);
+
 #####GENERATED_CONFIG_SETTINGS_END#####
 
 /* End of file cit_webservices.php */
