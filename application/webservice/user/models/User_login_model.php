@@ -40,9 +40,13 @@ class User_login_model extends CI_Model{
         return $this->db->affected_rows() > 0;
     }
 
-    public function set_token($id, $token) {
-      
-      return $this->db->where('user_id',$id)->update($this->table, ['api_token'=>$token, 'token_issued_at'=>date('Y-m-d H:i:s')]);;
+    public function set_token($id, $token,$device_id="",$device_type="") {
+      $data = ['api_token'=>$token, 'token_issued_at'=>date('Y-m-d H:i:s')];
+      if($device_id != "" && $device_type != ""){
+        $data['device_id'] = $device_id;
+        $data['device_type'] = $device_type;
+      } 
+      return $this->db->where('user_id',$id)->update($this->table, $data);;
     }
 
     public function update_password_by_email($email, $new_password) {

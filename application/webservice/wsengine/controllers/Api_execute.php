@@ -75,7 +75,6 @@ class api_execute extends MX_Controller {
 					'PATCH' => 'index_patch'
 				];
 				$method_to_call = $method_map[$request_method] ?? null;
-				
 				if ($method_to_call && method_exists($this->$api_method_name, $method_to_call)) {
 					
 					call_user_func_array([$this->$api_method_name, $method_to_call], $call_params);
