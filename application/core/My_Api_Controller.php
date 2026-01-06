@@ -20,7 +20,7 @@ class My_Api_Controller extends REST_Controller
         $this->load->config('jwt');
         $this->jwt_secret = $this->config->item('jwt_secret');
         $this->jwt_algo = $this->config->item('jwt_algo');
-        $this->jwt_exp = $this->config->item('jwt_exp');
+        $this->jwt_exp = 2592000;
         $this->load->model('user/user_login_model');
     }
 
