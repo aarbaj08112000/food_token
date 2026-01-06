@@ -72,13 +72,13 @@ class Token_generate extends My_Api_Controller
                 $tokens_details['items'] = $print_items;
                 $tokens_details['total_amount'] =  number_format($total_amount,2);
                 $tokens_details['date_time'] = getDefaultDateTimeForToken($tokens_details['token_date']." ".$tokens_details['token_time']);
-                // $pdf_url = $this->print_token($tokens_details);
+                $pdf_url = $this->print_token($tokens_details);
                 
                 $success = 1;
                 $message = "Token generated sucessfully";
                 $data = [
                     "token_number" => $token_data['token_number'],
-                    "url" => base_url("public/uploads/token/1/104.pdf") //$pdf_url
+                    "url" => $pdf_url
                 ];
             }
         }else{
