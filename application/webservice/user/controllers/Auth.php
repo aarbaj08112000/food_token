@@ -44,7 +44,7 @@ class Auth extends My_Api_Controller
             
             $checkDate = new DateTime($user->token_issued_at);
             
-            if($user->api_token != ""){
+            if($user->api_token != "" && $user->api_token != null){
                 return $this->response(['success' => 0, 'message' => 'User is already logged in on another device.'], REST_Controller::HTTP_UNAUTHORIZED);
             }
             

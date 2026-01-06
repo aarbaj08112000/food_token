@@ -75,7 +75,7 @@ class My_Api_Controller extends REST_Controller
         }
 
         if ($payload['success'] == -1 &&  isset($payload['success']) ) {
-            $this->user_login_model->set_token($payload['uid'], "");
+            $this->user_login_model->set_token($payload['uid'], null);
             $this->response(['success' => $payload['success'], 'message' => $payload['message']], REST_Controller::HTTP_UNAUTHORIZED);
             return false;
         }
