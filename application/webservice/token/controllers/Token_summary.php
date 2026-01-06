@@ -12,7 +12,6 @@ class Token_summary extends My_Api_Controller
         if ($this->authenticate() !== true) {
             return;
         }
-        $user_id = $this->current_user->user_id;
         $restaurant_id = $this->current_user->restaurant_id;
 
         $summary_data = [];
@@ -63,7 +62,7 @@ class Token_summary extends My_Api_Controller
             "success" => $success,
             "message" => $message,
             'data' => $data
-        ), $success == 1 ? REST_Controller::HTTP_OK : REST_Controller::HTTP_NOT_FOUND);
+        ), REST_Controller::HTTP_OK);
         
         
     }
