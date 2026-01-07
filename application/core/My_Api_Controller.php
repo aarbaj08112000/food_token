@@ -88,6 +88,7 @@ class My_Api_Controller extends REST_Controller
         $this->current_user = $user;
         return true;
     }
+    
 
     // Require one or more roles
     protected function require_role($roles = [])
