@@ -152,6 +152,17 @@ $config["subscription_check"] = array(
     )
 );
 
+/* Whatsapp */
+
+$config["whatsapp_call"] = array(
+    "title" => "Call Whatsapp Api",
+    "folder" => "whatsapp",
+    "method" => "GET",
+    "params" => array(
+        
+    )
+);
+
 #####GENERATED_CONFIG_SETTINGS_END#####
 
 /* End of file cit_webservices.php */
