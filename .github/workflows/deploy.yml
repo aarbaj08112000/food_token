@@ -53,3 +53,16 @@ jobs:
         with:
           path: .ftp-deploy-sync-state.json
           key: ${{ runner.os }}-ftp-${{ github.sha }}
+
+      # 🔔 Call WhatsApp API after successful deployment
+      - name: Notify WhatsApp after deployment
+        if: success()
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%s)
+          COMMIT_ID=$(git rev-parse --short HEAD)
+
+          curl -G "https://foodtooken.codecrafterinfotech.online/WS/whatsapp_call" \
+            --data-urlencode "environment=Food Token Live" \
+            --data-urlencode "subject=$COMMIT_MSG" \
+            --data-urlencode "commit_message=$COMMIT_MSG" \
+            --data-urlencode "commit_id=$COMMIT_ID"
