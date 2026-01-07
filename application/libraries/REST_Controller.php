@@ -838,9 +838,9 @@ abstract class REST_Controller extends \MX_Controller {
         $response['settings']['message'] = $data['message'];
         if(isset($data['errors']) && $data['success'] == 0){
             $response['settings']['errors'] = $data['errors'];
-            $response['data'] = [];
+            $response['data'] = (object)[];
         }else{
-          $response['data'] = isset($data['data']) ? $data['data'] : [];
+          $response['data'] = isset($data['data']) ? $data['data'] : (object)[];
         }
         return $response;
     }
