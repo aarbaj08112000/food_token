@@ -37,6 +37,7 @@ class Auth extends My_Api_Controller
             return $this->response(['success' => 0, 'errors' => $this->form_validation->error_array(),"data" => (object)[]], REST_Controller::HTTP_BAD_REQUEST);
         }
         
+        
         $user = $this->user_login_model->get_by_email($input['email']);
         if (!$user || !$this->verify_password($input['password'], $user->user_password)) {
             return $this->response(['success' => 0, 'message' => 'Invalid credentials',"data" => (object)[]], REST_Controller::HTTP_OK);
