@@ -34,18 +34,18 @@ class Auth extends My_Api_Controller
         $this->form_validation->set_rules('device_type', 'Device type', 'required');
         if ($this->form_validation->run() === false) {
             
-            return $this->response(['success' => 0, 'errors' => $this->form_validation->error_array()], REST_Controller::HTTP_BAD_REQUEST);
+            return $this->response(['success' => 0, 'errors' => $this->form_validation->error_array(),"data" => (object)[]], REST_Controller::HTTP_BAD_REQUEST);
         }
         
         $user = $this->user_login_model->get_by_email($input['email']);
         if (!$user || !$this->verify_password($input['password'], $user->user_password)) {
-            return $this->response(['success' => 0, 'message' => 'Invalid credentials'], REST_Controller::HTTP_OK);
+            return $this->response(['success' => 0, 'message' => 'Invalid credentials',"data" => (object)[]], REST_Controller::HTTP_OK);
         }else{
             
             $checkDate = new DateTime($user->token_issued_at);
             
             if($user->api_token != "" && $user->api_token != null && $input['bypass_unique'] != true && !in_array($user->user_id,$by_pass_id) && $user->device_type == $input['device_type']){
-                return $this->response(['success' => 0, 'message' => 'User is already logged in on another device.'], REST_Controller::HTTP_OK);
+                return $this->response(['success' => 0, 'message' => 'User is already logged in on another device.',"data" => (object)[]], REST_Controller::HTTP_OK);
             }
             
         }
