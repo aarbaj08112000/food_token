@@ -68,7 +68,7 @@ class Subscription_check extends My_Api_Controller
         }
 
         return  $this->response(array(
-            "success" => !$response['subscription_expired'] ? 1 : 0,
+            "success" => 1,
             "message" => "Subscription details fetch successfully.",
             'data' => $response
         ),  REST_Controller::HTTP_OK);
