@@ -39,7 +39,7 @@ class Auth extends My_Api_Controller
         
         $user = $this->user_login_model->get_by_email($input['email']);
         if (!$user || !$this->verify_password($input['password'], $user->user_password)) {
-            return $this->response(['success' => 0, 'message' => 'Invalid credentials'], REST_Controller::HTTP_UNAUTHORIZED);
+            return $this->response(['success' => 0, 'message' => 'Invalid credentials'], REST_Controller::HTTP_OK);
         }else{
             
             $checkDate = new DateTime($user->token_issued_at);
