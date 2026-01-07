@@ -47,7 +47,7 @@ class Subscription_check extends My_Api_Controller
         // Case 2: Expiring soon (<= 5 days)
         } elseif ($remainingDays <= 2) {
 
-            $response['subscription_expired'] = 0;
+            $response['subscription_expired'] = false;
             $response['subscription_message_dispaly'] = true;
             $response['subscription_days'] = $remainingDays;
             $dayText = ($remainingDays == 1) ? 'day' : 'days';
@@ -56,12 +56,12 @@ class Subscription_check extends My_Api_Controller
         // Case 3: Active (> 5 days)
         } elseif ($remainingDays <= 5) {
 
-            $response['subscription_expired'] = 0;
+            $response['subscription_expired'] = false;
             $response['subscription_message_dispaly'] = true;
             $response['subscription_days'] = $remainingDays;
             $response['message'] = "Your subscription is expiring in {$remainingDays} days";
         }else{
-            $response['subscription_expired'] = 0;
+            $response['subscription_expired'] = false;
             $response['subscription_message_dispaly'] = false;
             $response['subscription_days'] = $remainingDays;
             $response['message'] = "";
