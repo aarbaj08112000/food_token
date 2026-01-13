@@ -72,28 +72,15 @@ class Token_generate extends My_Api_Controller
                 $tokens_details['items'] = $print_items;
                 $tokens_details['total_amount'] =  number_format($total_amount,2);
                 $tokens_details['date_time'] = getDefaultDateTimeForToken($tokens_details['token_date']." ".$tokens_details['token_time']);
-                $pdf_url = $this->print_token($tokens_details);
+                $pdf_data = $this->print_token($tokens_details);
                 
                 $success = 1;
                 $message = "Token generated sucessfully";
                 $total = 123;
-                $html = '<table width="100%" cellpadding="2">
-                <tr>
-                    <td><b style="font-size:13px;">TOTAL</b></td>
-                    <td align="right"><b style="font-size:13px;">'.number_format($total, 2).'</b></td>
-                </tr>
-            </table>
-
-            <hr>
-
-            <div style="text-align:center;font-size:11px;">
-                Thank you! Please visit again.
-            </div>
-            ';
                 $data = [
                     "token_number" => $token_data['token_number'],
-                    "url" => $pdf_url,
-                    "html" => $html
+                    "url" => $pdf_data['pdf_url'],
+                    "html" => $pdf_data['html']
                 ];
             }
         }else{
@@ -217,19 +204,19 @@ class Token_generate extends My_Api_Controller
                 Code Crafter Infotech
             </div>
             ';
-        $html = '<table width="100%" cellpadding="2">
-                <tr>
-                    <td><b style="font-size:13px;">TOTAL</b></td>
-                    <td align="right"><b style="font-size:13px;">'.number_format($total, 2).'</b></td>
-                </tr>
-            </table>
+        // $html = '<table width="100%" cellpadding="2">
+        //         <tr>
+        //             <td><b style="font-size:13px;">TOTAL</b></td>
+        //             <td align="right"><b style="font-size:13px;">'.number_format($total, 2).'</b></td>
+        //         </tr>
+        //     </table>
 
-            <hr>
+        //     <hr>
 
-            <div style="text-align:center;font-size:11px;">
-                Thank you! Please visit again.
-            </div>
-            ';
+        //     <div style="text-align:center;font-size:11px;">
+        //         Thank you! Please visit again.
+        //     </div>
+        //     ';
 
 
 		$pdf->writeHTML($html, true, false, true, false, '');
@@ -245,7 +232,9 @@ class Token_generate extends My_Api_Controller
 		$file_path = $upload_path.$token_file;
 		$pdf->Output($file_path, 'F');
         $pdf_path = base_url($folder_path.$token_file);
-        return $pdf_path;
+        $pdf_data['pdf_url'] = $pdf_path;
+        $pdf_data['html'] = $html;
+        return $pdf_data;
 	}
     
    
