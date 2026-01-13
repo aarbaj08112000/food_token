@@ -102,8 +102,8 @@ class Token_generate extends My_Api_Controller
 		// Create PDF (Small receipt size)
 		$pdf = new Pdf1('P', 'mm', array(58, 200), true, 'UTF-8', false);
 
-		$pdf->SetMargins(2, 2, 2);
-		$pdf->SetAutoPageBreak(true, 0);
+		$pdf->SetMargins(0, 0, 0);
+		$pdf->SetAutoPageBreak(true, 2);
 		$pdf->setPrintHeader(false);
 		$pdf->setPrintFooter(false);
 
@@ -111,7 +111,7 @@ class Token_generate extends My_Api_Controller
         $pdf->setImageScale(1);
 		
 		// Font
-		$pdf->SetFont('helvetica', '', 10);
+		$pdf->SetFont('helvetica', '', 20);
 
 		// Sample dynamic data
 		// $token_details = [
@@ -202,7 +202,7 @@ class Token_generate extends My_Api_Controller
                 Code Crafter Infotech
             </div>
             ';
-        $html = '<table width="58mm" cellpadding="2">
+        $html = '<table width="100%" cellpadding="2">
                 <tr>
                     <td><b style="font-size:13px;">TOTAL</b></td>
                     <td align="right"><b style="font-size:13px;">'.number_format($total, 2).'</b></td>
