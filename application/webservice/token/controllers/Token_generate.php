@@ -76,9 +76,24 @@ class Token_generate extends My_Api_Controller
                 
                 $success = 1;
                 $message = "Token generated sucessfully";
+                $total = 123;
+                $html = '<table width="100%" cellpadding="2">
+                <tr>
+                    <td><b style="font-size:13px;">TOTAL</b></td>
+                    <td align="right"><b style="font-size:13px;">'.number_format($total, 2).'</b></td>
+                </tr>
+            </table>
+
+            <hr>
+
+            <div style="text-align:center;font-size:11px;">
+                Thank you! Please visit again.
+            </div>
+            ';
                 $data = [
                     "token_number" => $token_data['token_number'],
-                    "url" => $pdf_url
+                    "url" => $pdf_url,
+                    "html" => $html
                 ];
             }
         }else{
