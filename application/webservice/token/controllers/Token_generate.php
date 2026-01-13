@@ -103,14 +103,15 @@ class Token_generate extends My_Api_Controller
 		$pdf = new Pdf1('P', 'mm', array(58, 200), true, 'UTF-8', false);
 
 		$pdf->SetMargins(2, 2, 2);
-		$pdf->SetAutoPageBreak(true, 2);
+		$pdf->SetAutoPageBreak(true, 0);
 		$pdf->setPrintHeader(false);
 		$pdf->setPrintFooter(false);
 
 		$pdf->AddPage();
+        $pdf->setImageScale(1);
 		
 		// Font
-		$pdf->SetFont('helvetica', '', 11);
+		$pdf->SetFont('helvetica', '', 10);
 
 		// Sample dynamic data
 		// $token_details = [
@@ -144,7 +145,7 @@ class Token_generate extends My_Api_Controller
 
             <hr>
 
-            <table width="100%" cellpadding="2">
+            <table width="58mm" cellpadding="2">
                 <tr>
                     <td><b>Token:</b></td>
                     <td align="right"><b>'.$token_no.'</b></td>
@@ -157,7 +158,7 @@ class Token_generate extends My_Api_Controller
 
             <hr>
 
-            <table width="100%" cellpadding="2">
+            <table width="58mm" cellpadding="2">
                 <tr>
                     <th align="left" width="55%">Item</th>
                     <th align="center" width="15%">Qty</th>
@@ -167,7 +168,7 @@ class Token_generate extends My_Api_Controller
 
             <hr>
 
-            <table width="100%" cellpadding="2">
+            <table width="58mm" cellpadding="2">
             ';
 
             foreach ($items as $item) {
@@ -184,7 +185,7 @@ class Token_generate extends My_Api_Controller
 
             <hr>
 
-            <table width="100%" cellpadding="2">
+            <table width="58mm" cellpadding="2">
                 <tr>
                     <td><b style="font-size:13px;">TOTAL</b></td>
                     <td align="right"><b style="font-size:13px;">'.number_format($total, 2).'</b></td>
