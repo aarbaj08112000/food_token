@@ -138,73 +138,14 @@ class Token_generate extends My_Api_Controller
         // pr($token_no,1);
         // $token_no = 35;
 		// HTML layout
-		$html = '
-            <div style="text-align:center;">
-                <b style="font-size:14px;">'.$hotel_name.'</b><br>
-                <span style="font-size:10px;">'.$address.'</span><br>
-                <span style="font-size:10px;">'.$mobile.'</span>
-            </div>
-
-            <hr>
-
-            <table width="58mm" cellpadding="2">
-                <tr>
-                    <td><b>Token:</b></td>
-                    <td align="right"><b>'.$token_no.'</b></td>
-                </tr>
-                <tr>
-                    <td><b>Date:</b></td>
-                    <td align="right">'.$date_time.'</td>
-                </tr>
-            </table>
-
-            <hr>
-
-            <table width="58mm" cellpadding="2">
-                <tr>
-                    <th align="left" width="55%">Item</th>
-                    <th align="center" width="15%">Qty</th>
-                    <th align="right" width="30%">Amt</th>
-                </tr>
-            </table>
-
-            <hr>
-
-            <table width="58mm" cellpadding="2">
-            ';
+		$html = '<div style="text-align:center;"><b style="font-size:14px;">'.$hotel_name.'</b><br><span style="font-size:10px;">'.$address.'</span><br><span style="font-size:10px;">'.$mobile.'</span></div><hr><table width="58mm" cellpadding="2"><tr><td><b>Token:</b></td><td align="right"><b>'.$token_no.'</b></td></tr><tr><td><b>Date:</b></td><td align="right">'.$date_time.'</td></tr></table><hr><table width="58mm" cellpadding="2"><tr><th align="left" width="55%">Item</th><th align="center" width="15%">Qty</th><th align="right" width="30%">Amt</th></tr></table><hr><table width="58mm" cellpadding="2">';
 
             foreach ($items as $item) {
-                $html .= '
-                <tr>
-                    <td width="55%" style="font-size:11px;">'.$item['name'].'</td>
-                    <td width="15%" align="center" style="font-size:11px;">'.$item['qty'].'</td>
-                    <td width="30%" align="right" style="font-size:11px;">'.number_format($item['price'], 2).'</td>
-                </tr>';
+                $html .= '<tr><td width="55%" style="font-size:11px;">'.$item['name'].'</td><td width="15%" align="center" style="font-size:11px;">'.$item['qty'].'</td><td width="30%" align="right" style="font-size:11px;">'.number_format($item['price'], 2).'</td></tr>';
             }
 
-            $html .= '
-            </table>
-
-            <hr>
-
-            <table width="58mm" cellpadding="2">
-                <tr>
-                    <td><b style="font-size:13px;">TOTAL</b></td>
-                    <td align="right"><b style="font-size:13px;">'.number_format($total, 2).'</b></td>
-                </tr>
-            </table>
-
-            <hr>
-
-            <div style="text-align:center;font-size:11px;">
-                Thank you! Please visit again.
-            </div>
-
-            <div style="text-align:center;font-size:9px;">
-                Code Crafter Infotech
-            </div>
-            ';
-        $html = '<table width="100%" cellpadding="2"><tr><td><b style="font-size:13px;">TOTAL</b></td><td align="right"><b style="font-size:13px;">'.number_format($total, 2).'</b></td></tr></table><hr><div style="text-align:center;font-size:11px;">Thank you! Please visit again.</div>';
+            $html .= '</table><hr><table width="58mm" cellpadding="2"><tr><td><b style="font-size:13px;">TOTAL</b></td><td align="right"><b style="font-size:13px;">'.number_format($total, 2).'</b></td></tr></table><hr><div style="text-align:center;font-size:11px;">Thank you! Please visit again.</div><div style="text-align:center;font-size:9px;">Code Crafter Infotech</div>';
+        // $html = '<table width="100%" cellpadding="2"><tr><td><b style="font-size:13px;">TOTAL</b></td><td align="right"><b style="font-size:13px;">'.number_format($total, 2).'</b></td></tr></table><hr><div style="text-align:center;font-size:11px;">Thank you! Please visit again.</div>';
 
 
 		$pdf->writeHTML($html, true, false, true, false, '');
