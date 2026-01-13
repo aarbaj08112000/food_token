@@ -137,14 +137,14 @@ class Token_generate extends My_Api_Controller
         // pr($token_no,1);
         // $token_no = 35;
 		// HTML layout
-		$html = '<div style="text-align:center;"><b style="font-size:14px;">'.$hotel_name.'</b><br><span style="font-size:10px;">'.$address.'</span><br><span style="font-size:10px;">'.$mobile.'</span></div><hr><table width="58mm" cellpadding="2"><tr><td><b>Token:</b></td><td align="right"><b>'.$token_no.'</b></td></tr><tr><td><b>Date:</b></td><td align="right">'.$date_time.'</td></tr></table><hr><table width="58mm" cellpadding="2"><tr><th align="left" width="55%">Item</th><th align="center" width="15%">Qty</th><th align="right" width="30%">Amt</th></tr></table><hr><table width="58mm" cellpadding="2">';
+		// $html = '<div style="text-align:center;"><b style="font-size:14px;">'.$hotel_name.'</b><br><span style="font-size:10px;">'.$address.'</span><br><span style="font-size:10px;">'.$mobile.'</span></div><hr><table width="58mm" cellpadding="2"><tr><td><b>Token:</b></td><td align="right"><b>'.$token_no.'</b></td></tr><tr><td><b>Date:</b></td><td align="right">'.$date_time.'</td></tr></table><hr><table width="58mm" cellpadding="2"><tr><th align="left" width="55%">Item</th><th align="center" width="15%">Qty</th><th align="right" width="30%">Amt</th></tr></table><hr><table width="58mm" cellpadding="2">';
 
-            foreach ($items as $item) {
-                $html .= '<tr><td width="55%" style="font-size:11px;">'.$item['name'].'</td><td width="15%" align="center" style="font-size:11px;">'.$item['qty'].'</td><td width="30%" align="right" style="font-size:11px;">'.number_format($item['price'], 2).'</td></tr>';
-            }
+        //     foreach ($items as $item) {
+        //         $html .= '<tr><td width="55%" style="font-size:11px;">'.$item['name'].'</td><td width="15%" align="center" style="font-size:11px;">'.$item['qty'].'</td><td width="30%" align="right" style="font-size:11px;">'.number_format($item['price'], 2).'</td></tr>';
+        //     }
 
-            $html .= '</table><hr><table width="58mm" cellpadding="2"><tr><td><b style="font-size:13px;">TOTAL</b></td><td align="right"><b style="font-size:13px;">'.number_format($total, 2).'</b></td></tr></table><hr><div style="text-align:center;font-size:11px;">Thank you! Please visit again.</div><div style="text-align:center;font-size:9px;">Code Crafter Infotech</div>';
-        // $html = '<table width="100%" cellpadding="2"><tr><td><b style="font-size:13px;">TOTAL</b></td><td align="right"><b style="font-size:13px;">'.number_format($total, 2).'</b></td></tr></table><hr><div style="text-align:center;font-size:11px;">Thank you! Please visit again.</div>';
+        //     $html .= '</table><hr><table width="58mm" cellpadding="2"><tr><td><b style="font-size:13px;">TOTAL</b></td><td align="right"><b style="font-size:13px;">'.number_format($total, 2).'</b></td></tr></table><hr><div style="text-align:center;font-size:11px;">Thank you! Please visit again.</div><div style="text-align:center;font-size:9px;">Code Crafter Infotech</div>';
+        // // $html = '<table width="100%" cellpadding="2"><tr><td><b style="font-size:13px;">TOTAL</b></td><td align="right"><b style="font-size:13px;">'.number_format($total, 2).'</b></td></tr></table><hr><div style="text-align:center;font-size:11px;">Thank you! Please visit again.</div>';
         
 
         /* old code */
@@ -156,7 +156,16 @@ class Token_generate extends My_Api_Controller
 
 		$html .= '</table><div cellpadding="2" style="border-bottom:0.5px dashed #626567;line-height:4px;">&nbsp;</div><table width="100%" cellpadding="2"><div cellpadding="2" style="line-height:0px;">&nbsp;</div><tr><td  width="20%"><b>Total</b></td><td align="right" width="80%"><b>'.number_format($total, 2).'</b></td></tr></table><br><div style="text-align:center;font-size:7px;">Thank you! Please visit again.</div><div cellpadding="8" style="line-height:1.5;text-align:center;font-size:6px;color:#626567;border-bottom:0.5px dashed #626567;border-top:0.5px dashed #626567;"><span style="line-height:15px;">&nbsp;</span>Design & Developed by Code Crafter Infotech <br> <span style="color:black;">www.codecrafterinfotech.com</span><span style="line-height:12px;">&nbsp;</span></div>';
 
-		$pdf->writeHTML($html, true, false, true, false, '');
+        /* pdf  code */
+        $pdfhtml = '<div style="text-align:center;" cellpadding="2"><b>'.$hotel_name.'</b><br><span style="font-size:7px;">'.$address.'</span><br><span style="font-size:7px;">'.$mobile.'</span></div><div cellpadding="2" style="border-bottom:0.5px dashed #626567;line-height:2px;">&nbsp;</div><table width="100%" cellpadding="2"><div cellpadding="0" style="line-height:1px;">&nbsp;</div><tr><td width="30%">Token No  &nbsp;:</td><td >'.$token_no.'</td></tr></table><table width="100%" cellpadding="2"><tr><td width="30%">Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;:</td><td width="70%">'.$date_time.'</td></tr></table><div cellpadding="2" style="border-bottom:0.5px dashed #626567;line-height:4px;">&nbsp;</div><table width="100%" cellpadding="2"><div cellpadding="0" style="line-height:1px;">&nbsp;</div><tr><th align="left" width="55%"><b>Item</b></th><th align="center" width="15%"><b>Qty</b></th><th align="right" width="30%"><b>Amt</b></th></tr><div cellpadding="2" style="line-height:0px;">&nbsp;</div>';
+		foreach ($items as $item) {
+			$pdfhtml .= '<tr><td style="font-size:7px;">'.$item['name'].'</td><td align="center" style="font-size:7px;">'.$item['qty'].'</td><td align="right" style="font-size:7px;">'.number_format($item['price'], 2).'</td></tr>';
+		}
+		$pdfhtml .= '</table><div cellpadding="2" style="border-bottom:0.5px dashed #626567;line-height:4px;">&nbsp;</div><table width="100%" cellpadding="2"><div cellpadding="2" style="line-height:0px;">&nbsp;</div><tr><td  width="20%"><b>Total</b></td><td align="right" width="80%"><b>'.number_format($total, 2).'</b></td></tr></table><br><div style="text-align:center;font-size:7px;">Thank you! Please visit again.</div><div cellpadding="8" style="line-height:1.5;text-align:center;font-size:6px;color:#626567;border-bottom:0.5px dashed #626567;border-top:0.5px dashed #626567;"><span style="line-height:15px;">&nbsp;</span>Design & Developed by Code Crafter Infotech <br> <span style="color:black;">www.codecrafterinfotech.com</span><span style="line-height:12px;">&nbsp;</span></div>';
+
+        
+
+		$pdf->writeHTML($pdfhtml, true, false, true, false, '');
 
 		// Output
         $folder_path = "public/uploads/token/".$restaurant_id;
