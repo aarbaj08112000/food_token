@@ -149,7 +149,7 @@ class Token_generate extends My_Api_Controller
 
         /* old code */
         $html = '<div style="text-align:center;" cellpadding="2"><b>'.$hotel_name.'</b><br><span style="font-size:7px;">'.$address.'</span><br><span style="font-size:7px;">'.$mobile.'</span></div><div cellpadding="2" style="border-bottom:0.5px dashed #626567;line-height:2px;">&nbsp;</div><table width="100%" cellpadding="2"><div cellpadding="0" style="line-height:1px;">&nbsp;</div><tr><td width="30%">Token No  &nbsp;:</td><td >'.$token_no.'</td></tr></table><table width="100%" cellpadding="2"><tr><td width="30%">Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;:</td><td width="70%">'.$date_time.'</td></tr></table><div cellpadding="2" style="border-bottom:0.5px dashed #626567;line-height:4px;">&nbsp;</div><table width="100%" cellpadding="2"><div cellpadding="0" style="line-height:1px;">&nbsp;</div><tr><th align="left" width="55%"><b>Item</b></th><th align="center" width="15%"><b>Qty</b></th><th align="right" width="30%"><b>Amt</b></th></tr><div cellpadding="2" style="line-height:0px;">&nbsp;</div>';
-
+        $html .= '<tr><td style="font-size:7px;">&nbsp;td><td align="center" style="font-size:7px;">&nbsp;</td><td align="right" style="font-size:7px;">'.number_format(0, 2).'</td></tr>';
 		foreach ($items as $item) {
 			$html .= '<tr><td style="font-size:7px;">'.$item['name'].'</td><td align="center" style="font-size:7px;">'.$item['qty'].'</td><td align="right" style="font-size:7px;">'.number_format($item['price'], 2).'</td></tr>';
 		}
