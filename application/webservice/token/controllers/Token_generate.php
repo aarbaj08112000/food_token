@@ -155,7 +155,7 @@ class Token_generate extends My_Api_Controller
 		}
 
 		$html .= '</table><div cellpadding="2" style="border-bottom:0.5px dashed #626567;line-height:4px;">&nbsp;</div><table width="100%" cellpadding="2"><div cellpadding="2" style="line-height:0px;">&nbsp;</div><tr><td  width="20%"><b>Total</b></td><td align="right" width="80%"><b>'.number_format($total, 2).'</b></td></tr></table><br><div style="text-align:center;font-size:7px;">Thank you! Please visit again.</div><div cellpadding="8" style="line-height:1.5;text-align:center;font-size:6px;color:#626567;border-bottom:0.5px dashed #626567;border-top:0.5px dashed #626567;"><span style="line-height:15px;">&nbsp;</span>Design & Developed by Code Crafter Infotech <br> <span style="color:black;">www.codecrafterinfotech.com</span><span style="line-height:12px;">&nbsp;</span></div>';
-
+    
 		$pdf->writeHTML($html, true, false, true, false, '');
 
 		// Output
