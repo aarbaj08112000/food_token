@@ -202,6 +202,19 @@ class Token_generate extends My_Api_Controller
                 Code Crafter Infotech
             </div>
             ';
+        $html = '<table width="58mm" cellpadding="2">
+                <tr>
+                    <td><b style="font-size:13px;">TOTAL</b></td>
+                    <td align="right"><b style="font-size:13px;">'.number_format($total, 2).'</b></td>
+                </tr>
+            </table>
+
+            <hr>
+
+            <div style="text-align:center;font-size:11px;">
+                Thank you! Please visit again.
+            </div>
+            ';
 
 
 		$pdf->writeHTML($html, true, false, true, false, '');
