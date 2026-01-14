@@ -79,10 +79,18 @@ class My_Api_Controller extends REST_Controller
             $this->response(['success' => $payload['success'], 'message' => $payload['message']], REST_Controller::HTTP_UNAUTHORIZED);
             return false;
         }
+
+        // load user
+        $user = $this->user_login_model->get_by_token($token);
+        if (!$user) {
+            $this->response(['success' => -1, 'message' => "Token Expired"], REST_Controller::HTTP_UNAUTHORIZED);
+            return false;
+        }
+
         // load user
         $user = $this->user_login_model->get_by_id($payload['uid']);
         if (!$user) {
-            $this->response(['status' => false, 'message' => 'User not found'], REST_Controller::HTTP_UNAUTHORIZED);
+            $this->response(['success' => 0, 'message' => 'User not found'], REST_Controller::HTTP_UNAUTHORIZED);
             return false;
         }
         $this->current_user = $user;

@@ -28,5 +28,14 @@ class Subscription_model extends CI_Model
         $result = $this->db->get()->row_array();
         return $result;
     }
+
+    public function get_subscription_details($restaurant_id = 0,$token_id = 0)
+    {
+        $this->db->select('t.subscription_id,t.validity_title,t.month,t.description,t.amount,t.recommended');
+        $this->db->from('subscription t');
+        $this->db->where('t.status', "Active");
+        $result = $this->db->get()->result_array();
+        return $result;
+    }
    
 }

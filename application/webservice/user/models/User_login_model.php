@@ -31,6 +31,10 @@ class User_login_model extends CI_Model{
         return $this->db->get_where($this->table, ['user_id'=>$id])->row();
     }
 
+    public function get_by_token($token) {
+        return $this->db->get_where($this->table, ['api_token'=>$token])->row();
+    }
+
     public function update_user($id, $data) {
         if (isset($data['password'])) {
             $data['user_password'] = password_hash($data['password'], PASSWORD_BCRYPT);

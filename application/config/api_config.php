@@ -152,6 +152,15 @@ $config["subscription_check"] = array(
     )
 );
 
+$config["subscription"] = array(
+    "title" => "Check Subscription",
+    "folder" => "subscription",
+    "method" => "GET",
+    "params" => array(
+        
+    )
+);
+
 /* Whatsapp */
 
 $config["whatsapp_call"] = array(
