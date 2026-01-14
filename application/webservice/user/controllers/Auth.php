@@ -26,7 +26,7 @@ class Auth extends My_Api_Controller
     public function login()
     {
         $input = $this->post();
-        $by_pass_id = [1,2,3];
+        $by_pass_id = [1,3];
         $this->form_validation->set_data($input);
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'required');
@@ -45,7 +45,7 @@ class Auth extends My_Api_Controller
             
             $checkDate = new DateTime($user->token_issued_at);
             
-            if($user->api_token != "" && $user->api_token != null && $input['bypass_unique'] != true && !in_array($user->user_id,$by_pass_id) && $user->device_type == $input['device_type']){
+            if($user->api_token != "" && $user->api_token != null && $input['bypass_unique'] != true && !in_array($user->user_id,$by_pass_id) && $user->device_type == $input['device_type'] && $user->device_id != $input['device_id']){
                 return $this->response(['success' => 0, 'message' => 'User is already logged in on another device.',"data" => (object)[]], REST_Controller::HTTP_OK);
             }
             
