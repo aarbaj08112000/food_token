@@ -46,7 +46,7 @@ class Auth extends My_Api_Controller
             $checkDate = new DateTime($user->token_issued_at);
             
             if($user->api_token != "" && $user->api_token != null && $input['bypass_unique'] != true && !in_array($user->user_id,$by_pass_id) && $user->device_type == $input['device_type'] && $user->device_id != $input['device_id']){
-                return $this->response(['success' => 0, 'message' => 'User is already logged in on another device.',"data" => (object)[]], REST_Controller::HTTP_OK);
+                return $this->response(['success' => 2, 'message' => 'User is already logged in on another device.',"data" => (object)[]], REST_Controller::HTTP_OK);
             }
             
         }
