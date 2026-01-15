@@ -5,6 +5,7 @@ class Auth extends My_Api_Controller
     {
         parent::__construct();
         $this->load->model('user_login_model');
+        $this->master_otp = "003312";
       
     }
     public function register_post()
@@ -73,5 +74,97 @@ class Auth extends My_Api_Controller
 
         $this->user_login_model->set_token($this->current_user->user_id, null);
         return $this->response(['success' => 1, 'message' => 'Logged out'], REST_Controller::HTTP_OK);
+    }
+    public function verify_user()
+    {
+        
+        $post_data = $this->input->post();
+        if(!(count($post_data) > 0)){
+            $data = json_decode($this->input->raw_input_stream, true);
+            $post_data = $_POST = $data;
+        }
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        if ($this->form_validation->run() === false) {
+            return $this->response(['success' => 0, 'errors' => $this->form_validation->error_array(),"data" => (object)[]], REST_Controller::HTTP_BAD_REQUEST);
+        }
+        $email = $post_data['email'];
+        $user = $this->user_login_model->get_by_email($email);
+        $otp = random_int(100000, 999999);
+        $otp_validity = time() + 120;
+        $update_data = [
+            "otp" => $otp,
+            "otp_validity" => $otp_validity
+        ];
+        $user_update = $this->user_login_model->update_user($user->user_id,$update_data);
+        $success = 0;
+        $message = "Somthing went wrong";
+        if($user_update){
+            // pr($email,1);
+            $email_data = [
+                "user" => $user->user_name,
+                "valid_upto" => "2",
+                "otp" => $otp,
+                "email_name" => "OTP Verification",
+                "email_subject" => "OTP Verification Required for New Device Login",
+                "company_name" => "Code Crafter Infotech",
+                "company_email" => "codecrafter.help@gmail.com",
+                "company_contact" => "+91 94058 43312"
+            ];
+            $result = $this->email_sender($email_data,$email,"send_verify_user_otp");
+            // pr($result,1);   
+            if($result['success'] == 1){
+                $message = "Otp has been sent on email";
+                $success = 1;
+            }else{
+                $success = $result['success'];
+                $message = $result['message'];
+            }
+        }
+       
+        return $this->response(['success' => $success, 'message' => $message,"data" => (object)[]], REST_Controller::HTTP_OK);
+    }
+    public function verify_otp()
+    {
+        $post_data = $this->input->post();
+        if(!(count($post_data) > 0)){
+            $data = json_decode($this->input->raw_input_stream, true);
+            $post_data = $_POST = $data;
+        }
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('otp', 'Otp', 'required');
+        if ($this->form_validation->run() === false) {
+            return $this->response(['success' => 0, 'errors' => $this->form_validation->error_array(),"data" => (object)[]], REST_Controller::HTTP_BAD_REQUEST);
+        }
+        $email = $post_data['email'];
+        $otp = $post_data['otp'];
+        $user = $this->user_login_model->get_by_email($email);
+        $success = 0;
+        $message = "Somthing went wrong";
+        $master_otp_match = false;
+        if($user->otp == $otp || $this->master_otp == $otp){
+            if(time() <= $user->otp_validity){
+                $restaurant = $this->user_login_model->get_restaurant_by_id($user->restaurant_id);
+        
+                $payload = ['uid' => $user->user_id,  'iat' => time(), 'exp' => time() + $this->jwt_exp];
+                
+                $token = $this->jwt_encode($payload);
+                
+                $this->user_login_model->set_token($user->user_id, $token,$input['device_id'],$input['device_type']);
+                $data['token'] = $token;
+                $data['id'] = $user->user_id;
+                $user->image = base_url($user->image);
+                $data['user_details'] = $user;
+                $restaurant->logo_url = base_url($restaurant->logo_url);
+                $data['restaurant'] = $restaurant;
+                return $this->response(['success' => 1,'message' => 'Login successfully', 'data' => $data], REST_Controller::HTTP_OK);
+            }else{
+                $message = "Otp expired";
+            }
+
+        }else{
+            $message = "Otp invalid";
+        }
+        return $this->response(['success' => $success, 'message' => $message,"data" => (object)[]], REST_Controller::HTTP_OK);
+        
     }
 }

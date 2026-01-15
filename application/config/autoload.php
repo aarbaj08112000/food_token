@@ -59,7 +59,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
 if($GLOBALS['is_ws']){
-    $autoload['libraries'] = array('database',"parser");
+    $autoload['libraries'] = array('database',"parser",'phpmailer_lib','smartie' => 'smarty');
 }else{  
     $autoload['libraries'] = array('database', 'session', 'form_validation','smartie' => 'smarty','phpmailer_lib');
 }
