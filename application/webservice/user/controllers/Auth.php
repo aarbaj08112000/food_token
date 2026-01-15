@@ -26,7 +26,7 @@ class Auth extends My_Api_Controller
     public function login()
     {
         $input = $this->post();
-        $by_pass_id = [1,3];
+        $by_pass_id = [1,2,3];
         $this->form_validation->set_data($input);
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'required');
