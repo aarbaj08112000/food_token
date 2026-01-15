@@ -544,6 +544,9 @@ if($config['is_webservice'] == TRUE){
     );
 }
 
+$config['smtp_user_name'] = "mullaaarbaj10@gmail.com";
+$config['smtp_user_password'] = "mdon kbhd qxub magy";
+
 
 
 

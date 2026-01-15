@@ -167,4 +167,42 @@ class My_Api_Controller extends REST_Controller
 
         return $return_arr;
     }
+
+    /* send Mail */
+    public function email_sender($data = array(),$email = "",$template_name){
+        $configuration = $this->config->config;
+        $data['configuration']  = $configuration;
+        $mail = $this->phpmailer_lib->load();
+        $mail->isSMTP();                                      // Set mailer to use SMTP
+        $mail->Host = 'smtp.gmail.com';             // 'smtp.gmail.com'; //'smtpout.secureserver.net';
+        $mail->SMTPAuth = true;                               // Enable SMTP authentication
+        $mail->Username = $configuration['smtp_user_name'];     // SMTP username
+        $mail->Password = $configuration['smtp_user_password']; // SMTP password
+        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 587; //465; //587;                       // TCP port to connect to
+        $mail->From = $configuration['smtp_user_name'];
+        $mail->FromName = $data['email_name'];
+        $mail->addAddress($email);                      // Name is optional
+        $mail->isHTML(true);                                  // Set email format to HTML
+        $mail->Subject = $data['email_subject'];
+        $template_path = $this->config->item("site_path")."views/email_template/".$template_name.".tpl";
+        $html = $this->smarty->fetch($template_path,$data);
+        $mail->Body    = $html;
+        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+        // if($this->config->item("email_notification") == "Yes" || $email_notification){
+        if(!$mail->send()) {
+            $message =  'Message could not be sent';
+            $success = 0;
+            // echo 'Mailer Error: ' . $mail->ErrorInfo;
+        } else {
+            $success = 1;
+            $message =  'Emai has been sent';
+        }
+        // }else{
+        //    $message =  'notification turn off';
+        // }
+        
+        return ["message" => $message,"success" => $success];  
+
+    }
 }
