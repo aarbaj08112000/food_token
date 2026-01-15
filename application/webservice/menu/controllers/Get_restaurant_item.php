@@ -7,7 +7,7 @@ class Get_restaurant_item extends My_Api_Controller
         parent::__construct();
         $this->load->model('get_restaurant_item_model');
         $this->load->library('form_validation'); // REQUIRED
-        $this->per_page = 4;
+        $this->per_page = 12;
     }
 
     public function index_post()
