@@ -132,11 +132,15 @@ class Auth extends My_Api_Controller
         }
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('otp', 'Otp', 'required');
+        $this->form_validation->set_rules('device_id', 'Device id', 'required');
+        $this->form_validation->set_rules('device_type', 'Device type', 'required');
         if ($this->form_validation->run() === false) {
             return $this->response(['success' => 0, 'errors' => $this->form_validation->error_array(),"data" => (object)[]], REST_Controller::HTTP_BAD_REQUEST);
         }
         $email = $post_data['email'];
         $otp = $post_data['otp'];
+        $device_id = $post_data['device_id'];
+        $device_type = $post_data['device_type'];
         $user = $this->user_login_model->get_by_email($email);
         $success = 0;
         $message = "Somthing went wrong";
@@ -149,7 +153,7 @@ class Auth extends My_Api_Controller
                 
                 $token = $this->jwt_encode($payload);
                 
-                $this->user_login_model->set_token($user->user_id, $token,$input['device_id'],$input['device_type']);
+                $this->user_login_model->set_token($user->user_id, $token,$device_id,$device_type);
                 $data['token'] = $token;
                 $data['id'] = $user->user_id;
                 $user->image = base_url($user->image);
