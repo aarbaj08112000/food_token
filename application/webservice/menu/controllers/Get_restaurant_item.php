@@ -51,6 +51,7 @@ class Get_restaurant_item extends My_Api_Controller
             $success = 0;
             $message = "Somthing went wrong.";
             $data = [];
+            $search_param = isset($post_data['search_param']) && $post_data['search_param'] != null && $post_data['search_param'] != "" ? $post_data['search_param'] : "";
             $page_count = isset($post_data['page']) && $post_data['page'] > 0 ? $post_data['page'] : 1;
             $per_page = $this->per_page > 0 ? $this->per_page : 20;
             $start_record = $page_count > 1 ? (($page_count-1) * $per_page)  : 0;
@@ -59,11 +60,11 @@ class Get_restaurant_item extends My_Api_Controller
                 "length" => $per_page
             ];
 
-            $restaurant_item_data = $this->get_restaurant_item_model->get($restaurant_id,$pagination_data);
+            $restaurant_item_data = $this->get_restaurant_item_model->get($restaurant_id,$pagination_data,$search_param);
             foreach ($restaurant_item_data as $key => $value) {
                 $restaurant_item_data[$key]->image_url = base_url($value->image_url);
             }
-            $restaurant_item_count = $this->get_restaurant_item_model->get_count($restaurant_id);
+            $restaurant_item_count = $this->get_restaurant_item_model->get_count($restaurant_id,$search_param);
             $restaurant_item_count = (int) $restaurant_item_count['total_record'] > 0 ? $restaurant_item_count['total_record'] : 0;
             $next_page = ($start_record+$per_page) < $restaurant_item_count ? $post_data['page']+1 : 0;
             $success = 1;

@@ -96,4 +96,59 @@ class User_update extends My_Api_Controller
         }
     }
 
+    public function update_print_count(){
+        if ($this->authenticate() !== true) {
+            return;
+        }
+        $user_id = $this->current_user->user_id;
+        $restaurant_id = $this->current_user->restaurant_id;
+        $post_data = $this->input->post();
+        if(!(count($post_data) > 0)){
+            $data = json_decode($this->input->raw_input_stream, true);
+            $_POST = $data;
+        }
+        
+        $post_data = $this->input->post();
+        $config = array(
+            array(
+                'field' => 'print_count',
+                'label' => 'Print count',
+                'rules' => 'required'
+            )
+        );
+        $print_count = $this->security->xss_clean($this->input->post("print_count"));
+        $this->form_validation->set_rules($config);
+       
+       
+        
+        if ($this->form_validation->run() === FALSE) {
+            $this->response([
+                'success' => 0,
+                'message' => 'Validation failed',
+                'errors'  => $this->form_validation->error_array()
+            ], REST_Controller::HTTP_OK);
+            return;
+        }else{
+            $success = 0;
+            $message = "Somthing went wrong.";
+            $data = [];
+            if($user_id > 0){
+                $update_arr = [
+                    "print_count" => $print_count,
+                    "updated_by" => $user_id,
+                    "updated_date" => date("Y-m-d H:i:s")
+                ];
+                $affected_id = $this->user_login_model->update_user($user_id,$update_arr);
+                $success = 1;
+                $message = "Print count updated successfully";
+                $data['print_count'] = $print_count;
+            }
+            return  $this->response(array(
+                "success" => $success,
+                "message" => $message,
+                'data' => $data
+            ), $success == 1 ? REST_Controller::HTTP_OK : REST_Controller::HTTP_NOT_FOUND);
+        }
+    }
+
 }

@@ -17,6 +17,7 @@ class Item_add_update_model extends CI_Model
         if($id > 0){
             $this->db->where('item_id !=', $id);
         }
+        $this->db->where('status', "Active");
         $this->db->where('restaurant_id', $restaurant_id);
         $this->db->where('name', $name);
 
@@ -25,6 +26,7 @@ class Item_add_update_model extends CI_Model
     }
     public function get_details($id=0,$restaurant_id = 0)
     {
+        
         $this->db->where('item_id', $id);
         $this->db->where('restaurant_id', $restaurant_id);
 
