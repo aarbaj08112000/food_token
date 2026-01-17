@@ -6,7 +6,7 @@ class Token_summary_model extends CI_Model
     private $items = 'menu_items';
     public function get_month_tokens($restaurant_id = 0,$start_date = "",$end_date="")
     {
-        $this->db->select('SUM(ti.qty * ti.price) AS total_price, COUNT(DISTINCT t.token_id) AS total_tokens');
+        $this->db->select('SUM(ti.qty * ti.price) AS total_price, COUNT(DISTINCT t.token_id) AS total_tokens,t.payment_mode');
         $this->db->from('tokens t');
         $this->db->join('token_items ti', 't.token_id = ti.token_id');
         $this->db->where('t.restaurant_id', $restaurant_id);
@@ -14,7 +14,8 @@ class Token_summary_model extends CI_Model
             $this->db->where('t.token_date >=', $start_date);
             $this->db->where('t.token_date <=', $end_date);
         }
-        $result = $this->db->get()->row_array();
+        $this->db->group_by("t.payment_mode");
+        $result = $this->db->get()->result_array();
         return $result;
     }
 

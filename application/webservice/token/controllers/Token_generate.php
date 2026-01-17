@@ -30,6 +30,7 @@ class Token_generate extends My_Api_Controller
 
         $this->form_validation->set_rules($config);
         $items = $this->security->xss_clean($this->input->post("items"));
+        $payment_mode = $this->security->xss_clean($this->input->post("payment_mode"));
         $success = 0;
         $message = "Something went wrong";
         $data = [];
@@ -64,7 +65,8 @@ class Token_generate extends My_Api_Controller
                 "token_time" => date("H:i:s"),
                 "added_by" => $user_id,
                 "added_date" => date("Y-m-d H:i:s"),
-                "items" => $insert_items
+                "items" => $insert_items,
+                "payment_mode" => $payment_mode != "" && $payment_mode != null ? $payment_mode : "Online"
             ];
             $token_data = $this->token_generate_model->generate_token($payload);
             if($token_data['token_id'] > 0 ){

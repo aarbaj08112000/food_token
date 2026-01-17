@@ -3,7 +3,7 @@ name: Deploymet of food token
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   deploy:
