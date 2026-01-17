@@ -4,6 +4,7 @@ class Token_generate_model extends CI_Model
     private $token = 'tokens';
     private $token_items = 'token_items';
     private $items = 'menu_items';
+    private $user_table = 'users';
     public function generate_token($payload)
     {
         $this->db->trans_start();
@@ -52,6 +53,9 @@ class Token_generate_model extends CI_Model
         $this->db->where('t.token_id', $token_id);
         $result = $this->db->get()->row_array();
         return $result;
+    }
+    public function get_user_by_id($id) {
+        return $this->db->get_where($this->user_table, ['user_id'=>$id])->row();
     }
    
 }
