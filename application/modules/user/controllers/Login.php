@@ -6,6 +6,9 @@ class Login extends MY_Controller {
         parent::__construct();
         $this->load->model('Login_model');
     }
+    public function default(){
+        redirect('login');
+    }
 	public function index() {
 		$data['base_url'] = base_url();
 		$this->smarty->loadView('login.tpl',$data,'No','No');

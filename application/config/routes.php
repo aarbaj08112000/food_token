@@ -2,7 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 #------------ Login -----------------------------
-$route['default_controller'] = 'LogonDashboard/login';
+$route['default_controller'] = 'user/login/default';
 // $route['login'] = 'LogonDashboard/login';
 /* login & forgot password */
 $route['login'] = 'user/login/index';
