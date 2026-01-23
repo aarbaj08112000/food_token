@@ -14,20 +14,22 @@ class User_model extends CI_Model {
         return $ret_data;
     }
     public function getUserData(){
-        $this->db->select('u.*');
-        $this->db->from('userinfo as u');
+        $this->db->select('u.*,g.group_name as user_role,DATE(u.subscription_valid_date) as subscription_valid_date,DATE(u.last_login_at) as last_login_at');
+        $this->db->from('users as u');
+        $this->db->order_by('u.user_id','desc');
+        $this->db->join("group_master as g","g.group_master_id = u.user_role");
         $result_obj = $this->db->get();
         $ret_data = is_object($result_obj) ? $result_obj->result_array() : [];
         return $ret_data;
     }
     public function insertUser($insert_date = array()){
-        $this->db->insert("userinfo", $insert_date);
+        $this->db->insert("users", $insert_date);
         $insert_id = $this->db->insert_id();
         return  $insert_id;
     }
     public function updateUserData($update_date = array(),$user_id = 0){
-        $this->db->where('id', $user_id);
-        $this->db->update('userinfo', $update_date);
+        $this->db->where('user_id', $user_id);
+        $this->db->update('users', $update_date);
         $affected_rows = $this->db->affected_rows() == 0 ? 1 : $this->db->affected_rows();
         return $affected_rows;
     }

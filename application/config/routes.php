@@ -12,11 +12,14 @@ $route['login1'] = 'login_old';
 
 /* admin */
 $route['sitemap'] = 'user/login/site_map';
-$route['user_list'] = 'user1/user_login/start';
+$route['user_list'] = 'user/user/user_list';
 $route['group_master'] = 'user/user/groupMaster';
 $route['group_menu'] = 'user/user/groupMenu';
 
 $route['group_menu'] = 'user/user/groupMenu';
+
+/* restaurant s*/
+$route['restaurant_list'] = 'restaurant/restaurant/restaurant_list';
 
 
 // /*   api execute */

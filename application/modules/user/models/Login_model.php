@@ -10,7 +10,7 @@ class Login_model extends CI_Model {
     public function get_user_details($email ="",$password="")
 	{
 		$this->db->select('*');
-		$this->db->from('userinfo u');
+		$this->db->from('users u');
 		$this->db->where('u.user_email', $email);
 		$this->db->where('u.user_password', $password);
 		$this->db->where('u.status', 'Active');
@@ -21,22 +21,22 @@ class Login_model extends CI_Model {
 	public function get_user_exist($email ="")
 	{
 		$this->db->select('*');
-		$this->db->from('userinfo u');
+		$this->db->from('users u');
 		$this->db->where('u.user_email', $email);
 		$query = $this->db->get();
 		$data = is_object($query) ? $query->row_array() : [];
         return $data;
 	}
 	public function updateUserData($update_date = array(),$user_id = 0){
-        $this->db->where('id', $user_id);
-        $this->db->update('userinfo', $update_date);
+        $this->db->where('user_id', $user_id);
+        $this->db->update('users', $update_date);
         $affected_rows = $this->db->affected_rows() == 0 ? 1 : $this->db->affected_rows();
         return $affected_rows;
     }
 	public function get_company_details($company_id)
 	{
 		$this->db->select('*');
-		$this->db->from('userinfo u');
+		$this->db->from('users u');
 		$this->db->where('u.user_email', $email);
 		$this->db->where('u.user_password', $password);
 		$query = $this->db->get();
@@ -59,7 +59,7 @@ class Login_model extends CI_Model {
     public function get_user_exist_check($usename="")
 	{
 		$this->db->select('*');
-		$this->db->from('userinfo u');
+		$this->db->from('users u');
 		$this->db->where('u.user_email', $usename);
 		$this->db->where('u.status', 'Active');
 		$query = $this->db->get();

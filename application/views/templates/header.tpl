@@ -308,6 +308,17 @@
                         
                      </ul>
                   </li>
+                  <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdownMenuLinkPurchase" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                     Restaurant Management
+                     </a>
+                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkPurchaseSubmenu">
+                        <li>
+                           <a href="<%$base_url%>restaurant_list" class="dropdown-item">Restaurants</a>
+                        </li>
+                        
+                     </ul>
+                  </li>
                   <!-- <li class="nav-item">
                      <a href="http://localhost/extra_work/erp_converted/logout" class="nav-link">Logout</a>
                      </li> -->

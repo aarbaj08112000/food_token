@@ -57,7 +57,7 @@ i.options.fadeIn&&t.fadeIn("fast"),i.options.onReady&&i.options.onReady(t)}}};t.
 $(document).ready(function(){
 		
            setTimeout(function(){
-           		$('.sitemap1-items').AwesomeGrid({
+           		$('.sitemap-items').AwesomeGrid({
             rowSpacing  : 20,    
             colSpacing  : 20,  
             initSpacing : 0,     

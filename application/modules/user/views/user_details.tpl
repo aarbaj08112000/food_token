@@ -74,30 +74,10 @@
                                  <div class="form-group">
                                     <label for="on click url">User Role<span class="text-danger">*</span></label> <br>
                                     <select name="user_role" class="form-control select2" id="">
-                                       <option value="Admin">Admin</option>
-                                       <option value="Purchase">Purchase</option>
-                                       <option value="Approver">Approver</option>
-                                       <option value="inward_stores">inward stores </option>
-                                       <option value="stores">stores </option>
-                                       <option value="production">production</option>
-                                       <option value="FG_stores">FG stores</option>
-                                       <option value="Marketing">Marketing</option>
-                                       <option value="Development">Development</option>
-                                       <option value="Quality">Quality</option>
-                                       <option value="Inward_Quality">Inward Quality</option>
-                                       <option value="Sales">Sales</option>
+                                       <%foreach from=$groups item='groups_val' %>
+                                                           <option value="<%$groups_val['group_master_id'] %>" <%if in_array($groups_val['group_master_id'],$groups_arr)%>selected<%/if%>><%$groups_val['group_name']%></option>
+                                                           <%/foreach%>
                                     </select>
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="on click url">Unit<span class="text-danger">*</span></label> <br>
-                                    <div class="row">
-                                       <%foreach from=$client item='client_val' %>
-                                       <div class="col-4">
-                                          <input type="checkbox" class="check-box " name="client[]" value="<%$client_val['id']%>">
-                                          <label for="client" class="ms-1"><%$client_val['client_unit']%></label>
-                                       </div>
-                                       <%/foreach%>
-                                    </div>
                                  </div>
                                  <div class="form-group" >
                                     <label for="on click url" class="w-100">Groups<span class="text-danger">*</span> <a class="float-end page-access-btn" href="javascript:void(0)">View Page Access</a></label> <br>
@@ -133,8 +113,10 @@
                                  <th>Email</th>
                                  <th>Password</th>
                                  <th>Role</th>
+                                 <th>Subscription Expiry</th>
                                  <th>Status</th>
                                  <th>Action</th>
+                                 <th style="display: none;">data</th>
                               </tr>
                            </thead>
                            <tbody>
@@ -149,6 +131,7 @@
                                  <td><%$u['user_email'] %></td>
                                  <td><%$u['user_password'] %></td>
                                  <td><%$u['user_role'] %></td>
+                                 <td><%defaultDateFormat($u['subscription_valid_date']) %></td>
                                  <td><%$u['status'] %></td>
                                  <td>
                                     <a data-bs-toggle="modal" data-bs-target="#updatePromo<%$i%>"><i class="ti ti-edit"></i></a>
@@ -181,30 +164,10 @@
                                                      <div class="form-group">
                                                         <label for="on click url">Select Role<span class="text-danger">*</span></label> <br>
                                                         <select name="user_role" class="form-control select2 required-input"  disabled>
-                                                           <option value="Admin">Admin</option>
-                                                           <option value="Purchase">Purchase</option>
-                                                           <option value="Approver">Approver</option>
-                                                           <option value="inward_stores">inward stores </option>
-                                                           <option value="stores">stores </option>
-                                                           <option value="production">production</option>
-                                                           <option value="FG_stores">FG stores</option>
-                                                           <option value="Marketing">Marketing</option>
-                                                           <option value="Development">Development</option>
-                                                           <option value="Quality">Quality</option>
-                                                           <option value="Inward_Quality">Inward Quality</option>
-                                                           <option value="Sales">Sales</option>
-                                                        </select>
-                                                     </div>
-                                                     <div class="form-group unit-box">
-                                                        <label for="on click url">Unit<span class="text-danger">*</span></label> <br>
-                                                        <div class="row">
-                                                           <%foreach from=$client item='client_val' %>
-                                                           <div class="col-4">
-                                                              <input type="checkbox" class="check-box required-input" name="client[]" value="<%$client_val['id'] %>" <%if in_array($client_val['id'],$units)%>checked<%/if%>>
-                                                              <label for="client" class="ms-1"><%$client_val['client_unit']%></label>
-                                                           </div>
+                                                           <%foreach from=$groups item='groups_val' %>
+                                                           <option value="<%$groups_val['group_master_id'] %>" <%if in_array($groups_val['group_master_id'],$groups_arr)%>selected<%/if%>><%$groups_val['group_name']%></option>
                                                            <%/foreach%>
-                                                        </div>
+                                                        </select>
                                                      </div>
                                                      <div class="form-group" >
                                                         <label for="on click url" class="w-100">Groups<span class="text-danger">*</span> <a type="button" class="float-end page-access-btn hide" href="javascript:void(0)">View Page Access</a></label> <br>
@@ -216,7 +179,7 @@
                                                      </div>
                                                     </div>
                                                      <div class="form-group" >
-                                                        <label for="on click url" class="w-100">Groups<span class="text-danger">*</span> </label> <br>
+                                                        <label for="on click url" class="w-100">Status<span class="text-danger">*</span> </label> <br>
                                                         <select name="status" class="form-control select2-multiple required-input"  >
                                                            <option value="Active" <%if $u['status'] eq 'Active'%>selected<%/if%>>Active</option>
                                                            <option value="Inactive" <%if $u['status'] eq 'Inactive'%>selected<%/if%>>Inactive</option>
@@ -234,6 +197,7 @@
                                        </div>
                                     </div>
                                  </td>
+                                 <td style="display: none;"><%json_encode($u)%></td>
                               </tr>
                               <%assign var='i' value=$i+1 %>
                               <%/foreach%>

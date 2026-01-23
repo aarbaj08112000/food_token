@@ -83,6 +83,9 @@ class User_login_model extends CI_Model{
         $order = $this->db->get_where("users")->row();
         return (array) $order;
     }
+    public function get_config() {
+        return $this->db->get_where("config_setting")->result();
+    }
 
 }
 

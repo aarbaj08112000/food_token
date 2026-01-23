@@ -16,6 +16,12 @@ class User extends MY_Controller {
 		$data['client'] = $this->User_model->getClientData();
         $data['groups'] = $this->User_model->getGroupData();
 		$data['user_info'] = $this->User_model->getUserData();
+		foreach ($data['user_info'] as $key => $value) {
+			$data['user_info'][$key]['user_img'] = isset($value['image']) && $value['image'] != "" && $value['image'] != null ? $value['image'] : "public/img/user.jpeg";
+			$data['user_info'][$key]['last_login_at'] = defaultDateFormat($value['last_login_at']);
+			$data['user_info'][$key]['last_login_at'] = defaultDateFormat($value['last_login_at']);
+		}
+		// pr($data['user_info'],1);
 		$data['no_data_message'] = NoDataFoundMessage("user");
 		$this->smarty->loadView('user_details.tpl', $data,'Yes','Yes');
 	}
@@ -27,7 +33,7 @@ class User extends MY_Controller {
         $client_arr  = $this->input->post("client");
         $groups  = $this->input->post("groups");
         
-        if(is_valid_array($client_arr) && is_valid_array($groups)){
+        if( is_valid_array($groups)){
     		$data = array(
     			'user_name' => $this->input->post('user_name'),
     			'user_email' => $this->input->post('user_email'),
@@ -35,7 +41,6 @@ class User extends MY_Controller {
     			'user_role' => $this->input->post('user_role'),
     			'added_date' => date("Y-m-d H:i:s"),
     			'added_by' => $this->session->userdata('user_id'),
-                'unit_ids' => implode(",", $client_arr),
                 "deleted"=>0,
                 'groups' => implode(",", $groups),
     		);

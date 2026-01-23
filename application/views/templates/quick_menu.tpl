@@ -15,8 +15,8 @@
       </div>
       <div id="scrollable_content" class="scrollable-content">
          <div class="sitemap-blocks pad-calc-container">
-            <div class="sitemap-items" style="position: relative; height: 1010px;">
-                              <div class="span3 box ag-col-1" style="width: 425.25px; position: absolute; left: 0px; top: 0px;">
+            <div class="sitemap-items" style="position: relative; height: 1597px;">
+               <div class="span3 box ag-col-1" style="width: 25%;">
                   <div class="title">
                      <h4><span class="icon14 "></span>User Management</h4>
                   </div>
@@ -32,6 +32,23 @@
                            Group Master
                            </a>
                         </li>
+                     </ul>
+                  </div>
+               </div>
+               
+              
+               <div class="span3 box ag-col-1" style="width: 25%;">
+                  <div class="title">
+                     <h4><span class="icon14 "></span>Restaurant Management</h4>
+                  </div>
+                  <div class="content ">
+                     <ul class="sitemap">
+                                                <li>
+                           <a hijacked="yes" href="<%base_url('restaurant_list')%>" class="nav-active-link" title="Purchase PO">
+                           Restaurants
+                           </a>
+                        </li>
+                         
                      </ul>
                   </div>
                </div>

@@ -171,4 +171,21 @@ class Auth extends My_Api_Controller
         return $this->response(['success' => $success, 'message' => $message,"data" => (object)[]], REST_Controller::HTTP_OK);
         
     }
+    public function get_config()
+    {
+        if ($this->authenticate() !== true) {
+            return;
+        }
+       
+        $config_data = $this->user_login_model->get_config();
+        $config_data_return = [];
+        $provide_config = ["payment_gateway_id","payment_gateway_secret_key"];
+        foreach ($config_data as $key => $value) {
+            if(in_array($value->name,$provide_config)){
+                $config_data_return[$value->name] = $value->value;
+            }
+        }
+        return $response = $this->response(['success' => 1,'message' => 'Config data get successfully','data' => $config_data_return], REST_Controller::HTTP_CREATED);
+         
+    }
 }

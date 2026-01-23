@@ -141,9 +141,6 @@ const user_app = {
                 user_role: {
                     required: true
                 },
-                'client[]':{
-                     required: true
-                },
                 'groups[]':{
                      required: true
                 }

@@ -25,7 +25,9 @@ const grid = {
 		    	if(row_data.length > 0){
 			        for (var i = 0; i < row_data.length; i++) {
 			        	var row_details = row_data[i]._aData;
-			        	var status = row_details[5] == "Active" ? "active" : "inactive";
+						var user_details = JSON.parse(row_details[8]);
+						console.log(user_details);
+			        	var status = row_details[6] == "Active" ? "active" : "inactive";
 			        	let row_html = `<div class="col-3">
 									        <div class="card mb-4">
 									            <div class="grid_view_warehouse">
@@ -34,7 +36,7 @@ const grid = {
 										                    <div class="grid_view_warehouse_title_lt">
 										                        <div class="grid_view_warehouse_title_icon">
 										                           <div class="status-radius ${status}"></div>
-										                           <img src="public/img/user.jpeg" width="62" height="62" class="list-image ma_profile_image">
+										                           <img src="${user_details['user_img']}" width="62" height="62" class="list-image ma_profile_image">
 										                        </div>
 										                        <div class="grid_view_warehouse_title_cnt p-3">
 											                           <h5 class="trim-characters"><a title="${row_details[1]}" '="" href="javascript:void(0)">${row_details[1]}</a></h5>
@@ -43,7 +45,7 @@ const grid = {
 										                    </div>
 										                </div>
 										            	<div class="grid-types">
-										                     <div class="request_type"><strong>Group Name</strong>Employee</div>
+										                     <div class="request_type"><strong>Subscription Expiry Date</strong>${row_details[5]}</div>
 										                     <div class="other-actions-list-btn mt-0 mr-2">
 										                        <a class="la-calendar  btn view-btn" href="javascript:void(0)" type="button" data-id="2" title="Edit" data-bs-toggle="modal" data-bs-target="#updatePromo${row_details[0]}">Edit</a>
 										                        <div class="dropdown hide">
@@ -59,7 +61,9 @@ const grid = {
 										                </div>
 										                <div class="usage_type_box">
 										                     <div class="label_text"><span>Email</span><label class="trim-characters" title="${row_details[2]}">${row_details[2]}</label></div>
-										                     <div class="label_text"><span>Joining Date</span><label class="trim-characters" title="2024-06-23">2024-06-23</label></div>
+										                     <div class="label_text"><span>Last Login Date</span><label class="trim-characters" title="${user_details['last_login_at']}">${user_details['last_login_at']}</label></div>
+															 <div class="label_text"><span>Print Count</span><label class="trim-characters" title="${user_details['print_count']}">${user_details['print_count']}</label></div>
+															 <div class="label_text"><span>Login Attempt</span><label class="trim-characters" title="${user_details['login_attempt']}">${user_details['login_attempt']}</label></div>
 										                </div>
 										            </div>
 									          	</div>
