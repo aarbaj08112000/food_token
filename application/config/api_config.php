@@ -172,6 +172,17 @@ $config["whatsapp_call"] = array(
     )
 );
 
+/* Payment webhook */
+
+$config["payments"] = array(
+    "title" => "Call Payment webhook",
+    "folder" => "payment",
+    "method" => "GET",
+    "params" => array(
+        
+    )
+);
+
 #####GENERATED_CONFIG_SETTINGS_END#####
 
 /* End of file cit_webservices.php */
