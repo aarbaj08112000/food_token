@@ -62,11 +62,11 @@ class Requests_Transport_cURL implements Requests_Transport {
 		$curl = curl_version();
 		$this->version = $curl['version'];
 		$this->fp = curl_init();
-
+		
 		curl_setopt($this->fp, CURLOPT_HEADER, false);
 		curl_setopt($this->fp, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($this->handle, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($this->handle, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($this->fp, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($this->fp, CURLOPT_SSL_VERIFYHOST, false);
 		if (version_compare($this->version, '7.10.5', '>=')) {
 			curl_setopt($this->fp, CURLOPT_ENCODING, '');
 		}
