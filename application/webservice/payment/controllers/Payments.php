@@ -1,4 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
+
+require_once APPPATH . "third_party/Razorpay/Razorpay.php";
+use Razorpay\Api\Api;
 class Payments extends My_Api_Controller
 {
     public function __construct()
@@ -43,5 +46,58 @@ class Payments extends My_Api_Controller
             "json" => json_encode($data)
         ];
         $user_data = $this->payment_model->create_data($details);
+    }
+
+
+    public function generate_order_id()
+    {
+        if ($this->authenticate() !== true) {
+            return;
+        }
+        $post_data = $this->input->post();
+        if(!(count($post_data) > 0)){
+            $data = json_decode($this->input->raw_input_stream, true);
+            $post_data = $_POST = $data;
+        }
+        $input = $this->post();
+        $this->form_validation->set_data($input);
+        $this->form_validation->set_rules('subscription_id', 'Subscription Id', 'required');
+        $this->form_validation->set_rules('amount', 'amount', 'required');
+        if ($this->form_validation->run() === false) {
+            return $this->response(['success' => 0, 'errors' => $this->form_validation->error_array(),"data" => (object)[]], REST_Controller::HTTP_BAD_REQUEST);
+        }
+        $user_id = $this->current_user->user_id;
+
+        $config_data = $this->payment_model->get_config();
+        $config_data_return = [];
+        $provide_config = ["payment_gateway_id","payment_gateway_secret_key"];
+        foreach ($config_data as $key => $value) {
+            if(in_array($value->name,$provide_config)){
+                $config_data_return[$value->name] = $value->value;
+            }
+        }
+        $api = new Api($config_data_return['payment_gateway_id'], $config_data_return['payment_gateway_secret_key']);
+        $subscription_id = $post_data['subscription_id'];
+        $amount = $post_data['amount'];
+        $orderData = [
+            'amount' => $amount * 100, // in paise
+            'currency' => 'INR',
+            'receipt' => 'SUB_' . $subscription_id,
+            'notes' => [
+                'subscription_id' => $subscription_id,
+                'user_id' => $user_id
+            ]
+        ];
+
+        // Create order in Razorpay
+        $order = $api->order->create($orderData);
+
+        return  $this->response(array(
+            "success" => 1,
+            "message" => "Order generated successfully",
+            'data' => [
+                "order_id" => $order['id']
+            ]
+        ),  REST_Controller::HTTP_OK);
     }
 }
