@@ -49,10 +49,10 @@ class Payments extends My_Api_Controller
         $user_data = $this->payment_model->create_data($details);
     }
     public function payment_faild($data){
-        $this->payment_success($data);
+        $this->payment_success($data['payload']);
         try{
         $this->payment_success(["Startaaaa"]);
-        $response = $data['payload']['payment'];
+        $response = $data['payload']['payment']['entity'];
         $this->payment_success("Insert");
         $this->payment_success($response);
         $insert_data = [
@@ -78,6 +78,7 @@ class Payments extends My_Api_Controller
 
     public function generate_order_id()
     {
+
         if ($this->authenticate() !== true) {
             return;
         }
