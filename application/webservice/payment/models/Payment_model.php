@@ -17,6 +17,10 @@ class Payment_model extends CI_Model
     {
         return $this->db->get_where($this->table, ['id' => $id])->row();
     }
+    public function get_transaction($id)
+    {
+        return $this->db->get_where($this->payment_table, ['transaction_id' => $id])->row();
+    }
     public function get_config() {
         return $this->db->get_where("config_setting")->result();
     }
