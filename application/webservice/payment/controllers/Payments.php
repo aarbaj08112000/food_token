@@ -63,9 +63,9 @@ class Payments extends My_Api_Controller
         ];
         $get_transaction = $this->payment_model->get_transaction($response['id']); 
         $this->payment_success($get_transaction);
-        if(!(count($get_transaction) > 0) || $get_transaction == null){
+        // if(!(count($get_transaction) > 0) || $get_transaction == null){
             $payment_entry = $this->payment_model->create($insert_data);
-        }
+        // }
         
         }catch (Exception $e) {
             $this->payment_success(["Error"]);
