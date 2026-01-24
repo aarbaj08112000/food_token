@@ -75,8 +75,11 @@ class Payments extends My_Api_Controller
 
     public function generate_order_id()
     {
-        $get_transaction = $this->payment_model->get_transaction("pay_S7hAKykzifHlk8a"); 
+        $get_transaction = $this->payment_model->get_transaction("pay_S7hAKykzifHlk8"); 
         pr("iji");
+        if((count($get_transaction) == 0)){
+            pr("yeeee");
+        }
         pr($get_transaction,1);
         if ($this->authenticate() !== true) {
             return;
