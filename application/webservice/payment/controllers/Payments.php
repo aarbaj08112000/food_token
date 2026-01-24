@@ -64,6 +64,11 @@ class Payments extends My_Api_Controller
         $get_transaction = $this->payment_model->get_transaction($insert_data['transaction_id']);   
         if((count($get_transaction) == 0)){
             $payment_entry = $this->payment_model->create($insert_data);
+            return  $this->response(array(
+                "success" => 1,
+                "message" => "Payment failed. Please try again or use a different payment method.",
+                'data' => []
+            ),  REST_Controller::HTTP_OK);
         }
         
         }catch (Exception $e) {
@@ -91,9 +96,22 @@ class Payments extends My_Api_Controller
         }
         $get_subscription_data = $this->payment_model->get_subscription_data($response['notes']['subscription_id']);
         $date = $this->addMonthsToCurrentDate($get_subscription_data['month']);
-        $date = $date." 23:59:00";
-        $this->payment_error([$date]);
-
+        if($date != ""){
+            $date = $date." 23:59:00";
+            $insert_data = [
+                "subscription_valid_date" => $date
+            ];
+            $user_date = $this->payment_model->update_user($response['notes']['user_id'],$insert_data);
+            if($user_date){
+                return  $this->response(array(
+                    "success" => 1,
+                    "message" => "You have successfully subscribed! Enjoy our services.",
+                    'data' => [
+                        "date" => $date
+                    ]
+                ),  REST_Controller::HTTP_OK);
+            }
+        }
         
         }catch (Exception $e) {
             // $this->payment_success(["Error"]);
@@ -102,9 +120,9 @@ class Payments extends My_Api_Controller
 
     function addMonthsToCurrentDate($months, $format = 'Y-m-d')
     {
-    $date = new DateTime(); // current date
-    $date->modify("+$months month");
-    return $date->format($format);
+        $date = new DateTime(); // current date
+        $date->modify("+$months month");
+        return $date->format($format);
     }
 
 

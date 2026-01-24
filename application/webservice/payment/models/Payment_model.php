@@ -4,6 +4,7 @@ class Payment_model extends CI_Model
     private $table = 'web_hook';
     private $payment_table = 'payment_transaction';
     private $subscription_table = 'subscription';
+    private $user_table = 'users';
     public function create($data)
     {
         $this->db->insert($this->payment_table, $data);
@@ -36,5 +37,9 @@ class Payment_model extends CI_Model
         $this->db->where('t.subscription_id', $id);
         $result = $this->db->get()->row_array();
         return $result;
+    }
+    public function update_user($id, $data) {
+        $this->db->where('user_id', $id)->update($this->user_table, $data);
+        return $this->db->affected_rows() > 0;
     }
 }
