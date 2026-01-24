@@ -66,6 +66,10 @@ class Payments extends My_Api_Controller
             "status" => $response['status'],
             "response_json" => json_encode($data)
         ];
+        $details = [
+            "json" => json_encode($insert_data)
+        ];
+        $user_data = $this->payment_model->create_data($details);
         $payment_entry = $this->payment_model->create($insert_data);
         }catch (Exception $e) {
         $details = [
