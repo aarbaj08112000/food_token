@@ -91,7 +91,7 @@ class Payments extends My_Api_Controller
         }
         $get_subscription_data = $this->payment_model->get_subscription_data($response['notes']['subscription_id']);
         $date = $this->addMonthsToCurrentDate($get_subscription_data['month']);
-
+        $date = $date." 23:59:00";
         $this->payment_error([$date]);
 
         
