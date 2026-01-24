@@ -17,7 +17,7 @@ class Payments extends My_Api_Controller
         $secret = 'myWebhookSecret@2026';
         // 🔐 Verify signature
         if (hash_hmac('sha256', $payload, $secret) !== $signature) {
-            $this->payment_success(["Error"]);
+            $this->payment_error(["Error"]);
             show_error('Invalid signature', 403);
             return;
         }
@@ -41,7 +41,7 @@ class Payments extends My_Api_Controller
         ),  REST_Controller::HTTP_OK);
     }
 
-    public function payment_success($data){
+    public function payment_error($data){
         $details = [
             "json" => json_encode($data)
         ];
@@ -61,15 +61,50 @@ class Payments extends My_Api_Controller
             "status" => $response['status'],
             "response_json" => json_encode($data)
         ];
-        $get_transaction = $this->payment_model->get_transaction($insert_data['transaction_id']); 
-        $this->payment_success($get_transaction); 
+        $get_transaction = $this->payment_model->get_transaction($insert_data['transaction_id']);   
         if((count($get_transaction) == 0)){
             $payment_entry = $this->payment_model->create($insert_data);
         }
         
         }catch (Exception $e) {
-            $this->payment_success(["Error"]);
+            // $this->payment_error($data);
         }
+    }
+
+    public function payment_success($data){
+        try{
+        $response = $data['payload']['payment']['entity'];
+        $insert_data = [
+            "transaction_id" => $response['id'],
+            "order_id" => $response['id'],
+            "user_id" => $response['notes']['user_id'],
+            "amount" => $response['amount'],
+            "subscription_id" =>  $response['notes']['subscription_id'],
+            "error_code" => $response['error_code'],
+            "error_description" => $response['error_description'],
+            "status" => $response['status'],
+            "response_json" => json_encode($data)
+        ];
+        $get_transaction = $this->payment_model->get_transaction($insert_data['transaction_id']);   
+        if((count($get_transaction) == 0)){
+            $payment_entry = $this->payment_model->create($insert_data);
+        }
+        $get_subscription_data = $this->payment_model->get_subscription_data($response['notes']['subscription_id']);
+        $date = $this->addMonthsToCurrentDate($get_subscription_data['month']);
+
+        $this->payment_error([$date]);
+
+        
+        }catch (Exception $e) {
+            // $this->payment_success(["Error"]);
+        }
+    }
+
+    function addMonthsToCurrentDate($months, $format = 'Y-m-d')
+    {
+    $date = new DateTime(); // current date
+    $date->modify("+$months month");
+    return $date->format($format);
     }
 
 

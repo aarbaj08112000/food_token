@@ -3,6 +3,7 @@ class Payment_model extends CI_Model
 {
     private $table = 'web_hook';
     private $payment_table = 'payment_transaction';
+    private $subscription_table = 'subscription';
     public function create($data)
     {
         $this->db->insert($this->payment_table, $data);
@@ -27,5 +28,13 @@ class Payment_model extends CI_Model
     }
     public function get_config() {
         return $this->db->get_where("config_setting")->result();
+    }
+    public function get_subscription_data($id)
+    {
+        $this->db->select('t.*');
+        $this->db->from($this->subscription_table.' t');
+        $this->db->where('t.subscription_id', $id);
+        $result = $this->db->get()->row_array();
+        return $result;
     }
 }
