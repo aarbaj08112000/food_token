@@ -48,13 +48,12 @@ class Payments extends My_Api_Controller
         $user_data = $this->payment_model->create_data($details);
     }
     public function payment_faild($data){
-        $details = [
-            "json" => json_encode($data)
-        ];
-        $user_data = $this->payment_model->create_data($details);
+        $this->payment_success($data);
         try{
         $data = json_decode($data,TRUE);
         $response = $data['payload']['payment'];
+        $this->payment_success("Insert");
+        $this->payment_success($response);
         $insert_data = [
             "transaction_id" => $response['id'],
             "order_id" => $response['id'],
@@ -66,10 +65,8 @@ class Payments extends My_Api_Controller
             "status" => $response['status'],
             "response_json" => json_encode($data)
         ];
-        $details = [
-            "json" => json_encode($insert_data)
-        ];
-        $user_data = $this->payment_model->create_data($details);
+        $this->payment_success("Start Insert");
+        $this->payment_success($insert_data);
         $payment_entry = $this->payment_model->create($insert_data);
         }catch (Exception $e) {
         $details = [
