@@ -62,6 +62,7 @@ class Payments extends My_Api_Controller
             "response_json" => json_encode($data)
         ];
         $get_transaction = $this->payment_model->get_transaction($response['id']);
+        $this->payment_success($get_transaction);
         if(!(count($get_transaction) > 0)){
             $payment_entry = $this->payment_model->create($insert_data);
         }
