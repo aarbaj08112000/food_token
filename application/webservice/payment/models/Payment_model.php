@@ -2,9 +2,10 @@
 class Payment_model extends CI_Model
 {
     private $table = 'web_hook';
-    public function create($d)
+    private $payment_table = 'web_hook';
+    public function create($data)
     {
-        $this->db->insert($this->table, $d);
+        $this->db->insert($this->payment_table, $data);
         return $this->db->insert_id();
     }
     public function create_data($data)
