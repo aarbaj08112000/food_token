@@ -33,4 +33,7 @@ class Get_restaurant_item_model extends CI_Model
         $order = $this->db->get_where("restaurants")->row();
         return (array) $order;
     }
+    public function get_by_id($id) {
+        return $this->db->get_where("users", ['user_id'=>$id])->row();
+    }
 }

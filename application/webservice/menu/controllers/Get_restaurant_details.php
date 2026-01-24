@@ -31,10 +31,13 @@ class Get_restaurant_details extends My_Api_Controller
         $message = "Restaurant data not found.";
         $data = [];
         $restaurant_item_data = $this->get_restaurant_item_model->get_restaurant_details($restaurant_id);
+        $user_data = $this->get_restaurant_item_model->get_by_id($user_id);
         if(count($restaurant_item_data) > 0){
             $success = 1;
             $message = "Restaurant item data fetched successfully.";
             $restaurant_item_data['logo_url'] = base_url($restaurant_item_data['logo_url']);
+            $subscription_valid_date = date("M j, Y • h:i A", strtotime($user_data->subscription_valid_date));
+            $restaurant_item_data['subscription_valid_date'] = $subscription_valid_date;
             $data =  $restaurant_item_data;
         }
         return  $this->response(array(
