@@ -15,7 +15,6 @@ class Payments extends My_Api_Controller
         $signature = $_SERVER['HTTP_X_RAZORPAY_SIGNATURE'] ?? '';
 
         $secret = 'myWebhookSecret@2026';
-        $this->payment_success(["Started"]);
         // 🔐 Verify signature
         if (hash_hmac('sha256', $payload, $secret) !== $signature) {
             $this->payment_success(["Error"]);
@@ -49,12 +48,8 @@ class Payments extends My_Api_Controller
         $user_data = $this->payment_model->create_data($details);
     }
     public function payment_faild($data){
-        $this->payment_success($data['payload']);
         try{
-        $this->payment_success(["Startaaaa"]);
         $response = $data['payload']['payment']['entity'];
-        $this->payment_success("Insert");
-        $this->payment_success($response);
         $insert_data = [
             "transaction_id" => $response['id'],
             "order_id" => $response['id'],
@@ -66,12 +61,9 @@ class Payments extends My_Api_Controller
             "status" => $response['status'],
             "response_json" => json_encode($data)
         ];
-
-        $this->payment_success("Start Insert");
-        $this->payment_success($insert_data);
         $payment_entry = $this->payment_model->create($insert_data);
         }catch (Exception $e) {
-        $this->payment_success(["Error"]);
+            $this->payment_success(["Error"]);
         }
     }
 
