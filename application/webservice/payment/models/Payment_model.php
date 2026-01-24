@@ -22,7 +22,7 @@ class Payment_model extends CI_Model
         $this->db->select('t.*');
         $this->db->from($this->payment_table.' t');
         $this->db->where('t.transaction_id', $id);
-        $result = $this->db->get()->row_array();
+        $result = $this->db->get()->result_array();
         return $result;
     }
     public function get_config() {
